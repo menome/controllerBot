@@ -1,0 +1,27 @@
+{
+  "name": "room-monitor",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "1.0.11"
+  },
+  "dependencies": {
+    "forever": "latest",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "react-redux": "^5.0.2",
+    "express": "^4.15.2",
+    "history": "^4.6.3",
+    "react-fa": "^4.2.0",
+    "@menome/botframework": "^1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "start:prod": "node server.js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

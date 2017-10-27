@@ -8,30 +8,48 @@ var config = require('./config.js');
 var registry = require('./registry.js');
 
 // We only need to do this once. Bot is a singleton.
-module.exports = function init(){
-  bot.configure({
-    name: "Bot Manager",
-    desc: "Hosts a registration endpoint for bots to connect to and a react dashboard for user interaction.",
-    logging: config.get('logging'),
-    port: config.get('port'),
+bot.configure({
+  name: "Bot Manager",
+  desc: "Hosts a registration endpoint for bots to connect to and a react dashboard for user interaction.",
+  logging: config.get('logging'),
+  port: config.get('port'),
+});
+
+// Register our sync endpoint.
+bot.registerEndpoint({
+  "name": "Register",
+  "path": "/register",
+  "method": "POST",
+  "desc": "Add a new bot to the managment registry"
+}, function(req,res) {
+  registry.addNewBot(req);
+  res.send("Bot added to registry.")
+});
+
+//register an endpoint to pull registered bot information
+bot.registerEndpoint({
+  "name": "Serialize",
+  "path": "/serialize",
+  "method": "GET",
+  "desc": "Gets JSON detailing status of all bots"
+}, function(req,res) {
+   res.send(registry.serialize());
+});
+
+//register an endpoint to pull registered bot information
+bot.registerEndpoint({
+  "name": "Start",
+  "path": "/start",
+  "method": "POST",
+  "desc": "Given a botID, start that bots task"
+}, function(req,res) {
+  registry.runBots(req.body)
+  .then(function(response){
+    res.send("Bot job started.");
   });
+});
 
-  // Register our sync endpoint.
-  bot.registerEndpoint({
-    "name": "Register",
-    "path": "/register",
-    "method": "POST",
-    "desc": "Add a new bot to the managment registry"
-  }, function(req,res) {
-    registry.addNewBot()
-    .then(function(response){
-      res.send("Bot added to registry.")
-    });
-  });
-
-
-  
-  // Start the bot.
-  bot.start();
-  bot.changeState({state: "idle"})
-}
+registry.initialize();
+// Start the bot.
+bot.start();
+bot.changeState({state: "idle"})

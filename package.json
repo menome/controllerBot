@@ -2,26 +2,20 @@
   "name": "room-monitor",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "react-scripts": "1.0.11"
-  },
   "dependencies": {
-    "forever": "latest",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-router-dom": "^4.1.1",
-    "redux": "^3.6.0",
-    "react-redux": "^5.0.2",
-    "express": "^4.15.2",
-    "history": "^4.6.3",
-    "react-fa": "^4.2.0",
+    "convict": "latest",
     "@menome/botframework": "^1.0.0"
   },
+  "devDependencies": {
+    "mocha": "^3.4.2",
+    "chai": "^4.1.0",
+    "nodemon": "latest",
+    "mock-require": "^2.0.1"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "start:prod": "node server.js",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "[ \"$NODE_ENV\" = \"production\" ] && npm run prod || npm run dev",
+    "dev": "node ./node_modules/nodemon/bin/nodemon.js app/app.js",
+    "prod": "./node_modules/forever/bin/forever --minUptime 5000 --spinSleepTime 1000 app/app.js",
+    "test": "./node_modules/mocha/bin/mocha -C test"
   }
 }

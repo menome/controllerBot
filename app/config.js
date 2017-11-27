@@ -10,7 +10,13 @@ var bot = require('@menome/botframework')
 // Define a schema
 var config = convict({
   port: bot.configSchema.port,
-  logging: bot.configSchema.logging
+  logging: bot.configSchema.logging,
+  registryFile: {
+    doc:"The persistent file location for containing regsitered bots",
+    format: "*",
+    default: "registry.json",
+    env: "REGISTRY_FILE_LOCATION"
+  }
 });
 
 // Load from file.

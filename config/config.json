@@ -1,3 +1,4 @@
 {
-    "port":4807
+    "port":4807,
+    "registryFile":"registry.json"
 }

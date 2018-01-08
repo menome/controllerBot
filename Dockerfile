@@ -14,7 +14,7 @@ COPY ./package.json package.json
 
 # Handle NPM Token Management
 ARG NPM_TOKEN
-COPY .npmrc .npmrc
+COPY .npmrc-deploy .npmrc
 
 # Install dependencies and generate production dist
 RUN npm install

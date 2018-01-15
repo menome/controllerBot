@@ -15,7 +15,7 @@ bot.configure({
   port: config.get('port'),
 });
 
-// Register our sync endpoint.
+// Register our add bot endpoint.
 bot.registerEndpoint({
   "name": "Register",
   "path": "/register",
@@ -31,7 +31,7 @@ bot.registerEndpoint({
   )
 });
 
-//register an endpoint to pull registered bot information
+//register an endpoint to pull bot information
 bot.registerEndpoint({
   "name": "Serialize",
   "path": "/serialize",

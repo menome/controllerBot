@@ -11,7 +11,7 @@ module.exports ={
 }
 var list = {};
 function initialize(){
-  list = loadRegistry()
+  list = loadRegistry();
 }
 function loadRegistry(){
   jsonfile.readFile(config.get('registryFile'), function(err, obj) {
@@ -26,19 +26,21 @@ function saveRegistry(obj){
   })
 }
 function addNewBot(botInfo){
-  bot.logger.info(JSON.stringify(botInfo.body))
-  var info = {
+  //bot.logger.info(JSON.stringify(botInfo.body))
+  var botInfo = {
     "Name":botInfo.body.Name,
     "StatusEndpoint":botInfo.body.StatusEndpoint,
     "ActionEndpoint":botInfo.body.ActionEndpoint,
     "Description":botInfo.body.Description,
     "BotStatus":"initializing"
   }
-  list.push(info);
+  list.push(botInfo);
   saveRegistry(list);
 }
 
 function serialize(){
+  list = loadRegistry();
+  bot.logger.info(list);
   return list;
 }
 

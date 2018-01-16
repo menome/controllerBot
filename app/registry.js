@@ -25,16 +25,20 @@ function saveRegistry(obj){
     bot.logger.info("Registry persisted.")
   })
 }
-function addNewBot(botInfo){
-  //bot.logger.info(JSON.stringify(botInfo.body))
-  var botInfo = {
-    "Name":botInfo.body.Name,
-    "StatusEndpoint":botInfo.body.StatusEndpoint,
-    "ActionEndpoint":botInfo.body.ActionEndpoint,
-    "Description":botInfo.body.Description,
-    "BotStatus":"initializing"
-  }
-  list.push(botInfo);
+function addNewBot(botAddress){
+  getBotInfo(botAddress)
+  .then(function(botInfo){
+    bot.logger.info(JSON.stringify(botInfo.body))
+    var botInfo = {
+      "Name":botInfo.body.Name,
+      "StatusEndpoint":botInfo.body.StatusEndpoint,
+      "ActionEndpoint":botInfo.body.ActionEndpoint,
+      "Description":botInfo.body.Description,
+      "BotStatus":"initializing"
+    }
+    list.push(botInfo);
+  });
+
   saveRegistry(list);
 }
 
@@ -67,7 +71,7 @@ function postEndpoint(uri){
 
 
 // Fetches from the URL, transforms the results using the transform function, publishes the message.
-function getEndpoint(uri, qs, idPairs) {
+function getEndpoint(uri) {
   var options = {
     uri: uri,
     json: true,

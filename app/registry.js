@@ -1,6 +1,7 @@
 var config = require('./config.js');
 var bot = require('@menome/botframework');
 var jsonfile = require('jsonfile')
+var rp = require('request-promise');
 
 
 module.exports ={
@@ -9,14 +10,15 @@ module.exports ={
   initialize,
   runBots
 }
-var list = {};
+var list = [];
+
 function initialize(){
   list = loadRegistry();
 }
 function loadRegistry(){
   jsonfile.readFile(config.get('registryFile'), function(err, obj) {
-    if(err) throw err;
-    return obj;
+    if(err) return [];
+    return list = obj;
   })
 }
 function saveRegistry(obj){
@@ -26,25 +28,26 @@ function saveRegistry(obj){
   })
 }
 function addNewBot(botAddress){
-  getBotInfo(botAddress)
-  .then(function(botInfo){
-    bot.logger.info(JSON.stringify(botInfo.body))
+  bot.logger.info(botAddress.body.address);
+  getBotInfo(botAddress.body.address)
+  .then(function(res){
+    //bot.logger.info(JSON.stringify(res))
     var botInfo = {
-      "Name":botInfo.body.Name,
-      "StatusEndpoint":botInfo.body.StatusEndpoint,
-      "ActionEndpoint":botInfo.body.ActionEndpoint,
-      "Description":botInfo.body.Description,
-      "BotStatus":"initializing"
+      "Name":res["name"],
+      "Description":res["desc"],
+      "Operations":res["operations"]
     }
+    bot.logger.info(JSON.stringify(botInfo));
     list.push(botInfo);
+    saveRegistry(list);
   });
 
-  saveRegistry(list);
+
 }
 
 function serialize(){
-  list = loadRegistry();
-  bot.logger.info(list);
+  loadRegistry();
+  //bot.logger.info("eh" + list);
   return list;
 }
 
@@ -64,28 +67,23 @@ function postEndpoint(uri){
   }
   rp(options)
   .then(function(itms) {
-    bot.logger.info(itms);
+    bot.logger.info("hi" + itms);
   });
 }
 
-
-
-// Fetches from the URL, transforms the results using the transform function, publishes the message.
-function getEndpoint(uri) {
+function getBotInfo(ip){
   var options = {
-    uri: uri,
+    uri: "http://"+ip,
     json: true,
-    headers: {
 
-    }
   }
 
   return rp(options)
     .then(function(itm) {
-      bot.logger.info(itm);
+      //bot.logger.info(itm);
       return itm;
     })
     .catch(function(err) {
-      log.error(err.toString());
+      bot.logger.error(err.toString());
     })
 }

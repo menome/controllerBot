@@ -5,6 +5,8 @@
   "dependencies": {
     "convict": "latest",
     "@menome/botframework": "^1.0.6",
+    "request": "latest",
+    "request-promise": "latest",
     "jsonfile": "latest"
   },
   "devDependencies": {

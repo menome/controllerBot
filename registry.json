@@ -1,1 +1,1 @@
-{}
+[{"Name":"theLink Data Refinery Service","Description":"Converts sync messages into graph updates.","Operations":[{"name":"Status","path":"/status","method":"GET","desc":"Gets the bot's current status."}]}]

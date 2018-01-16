@@ -38,13 +38,12 @@ bot.registerEndpoint({
   "method": "GET",
   "desc": "Gets JSON detailing status of all bots"
 }, function(req,res) {
+  bot.logger.info(req.ip);
   res.send(
     bot.responseWrapper({
       status: "success",
       message: "Obtained registry",
-      registry: {
-        ...registry.serialize()
-      }
+      registry: registry.serialize()
     })
   )
 });

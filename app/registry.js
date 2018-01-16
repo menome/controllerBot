@@ -63,3 +63,25 @@ function postEndpoint(uri){
     bot.logger.info(itms);
   });
 }
+
+
+
+// Fetches from the URL, transforms the results using the transform function, publishes the message.
+function getEndpoint(uri, qs, idPairs) {
+  var options = {
+    uri: uri,
+    json: true,
+    headers: {
+
+    }
+  }
+
+  return rp(options)
+    .then(function(itm) {
+      bot.logger.info(itm);
+      return itm;
+    })
+    .catch(function(err) {
+      log.error(err.toString());
+    })
+}

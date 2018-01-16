@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "convict": "latest",
-    "@menome/botframework": "^1.0.0",
+    "@menome/botframework": "^1.0.6",
     "jsonfile": "latest"
   },
   "devDependencies": {

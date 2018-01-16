@@ -23,7 +23,12 @@ bot.registerEndpoint({
   "desc": "Add a new bot to the managment registry"
 }, function(req,res) {
   registry.addNewBot(req);
-  res.send("Bot added to registry.")
+  res.send(
+    bot.responseWrapper({
+      status: "success",
+      message: "Bot added to Registry"
+    })
+  )
 });
 
 //register an endpoint to pull bot information
@@ -33,7 +38,15 @@ bot.registerEndpoint({
   "method": "GET",
   "desc": "Gets JSON detailing status of all bots"
 }, function(req,res) {
-   res.send(registry.serialize());
+  res.send(
+    bot.responseWrapper({
+      status: "success",
+      message: "Obtained registry",
+      registry: {
+        ...registry.serialize()
+      }
+    })
+  )
 });
 
 //register an endpoint to pull registered bot information
@@ -45,7 +58,12 @@ bot.registerEndpoint({
 }, function(req,res) {
   registry.runBots(req.body)
   .then(function(response){
-    res.send("Bot job started.");
+    res.send(
+      bot.responseWrapper({
+        status: "success",
+        message: "Bot job started"
+      })
+    )
   });
 });
 

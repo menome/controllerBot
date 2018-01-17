@@ -53,14 +53,14 @@ bot.registerEndpoint({
   "name": "Start",
   "path": "/start",
   "method": "POST",
-  "desc": "Given a botID, start that bots task"
+  "desc": "Given a bots id and operation, start that bots task"
 }, function(req,res) {
-  registry.runBots(req.body)
+  registry.runBot(req.body)
   .then(function(response){
     res.send(
       bot.responseWrapper({
         status: "success",
-        message: "Bot job started"
+        message: response
       })
     )
   });

@@ -8,7 +8,7 @@ module.exports ={
   addNewBot,
   serialize,
   initialize,
-  runBots
+  runBot
 }
 var list = [];
 
@@ -34,6 +34,7 @@ function addNewBot(botAddress){
     //bot.logger.info(JSON.stringify(res))
     var botInfo = {
       "Name":res["name"],
+      "Address":botAddress.body.address,
       "Description":res["desc"],
       "Operations":res["operations"]
     }
@@ -51,25 +52,6 @@ function serialize(){
   return list;
 }
 
-function runBots(bots){
-  bots.foreach(function(bot){
-    postEndpoint(bot.ActionEndpoint)
-  })
-}
-
-function postEndpoint(uri){
-  var options = {
-    uri: uri,
-    json: true,
-    headers: {
-
-    }
-  }
-  rp(options)
-  .then(function(itms) {
-    bot.logger.info("hi" + itms);
-  });
-}
 
 function getBotInfo(ip){
   var options = {
@@ -86,4 +68,16 @@ function getBotInfo(ip){
     .catch(function(err) {
       bot.logger.error(err.toString());
     })
+}
+
+//make this pull the bots info from list once given an ID
+function runBot(runInfo){
+  return postEndpoint(runInfo["BotAddress"] + runInfo["Path"]);
+}
+function postEndpoint(uri){
+  var options = {
+    uri: "http://" + uri,
+    json: true,
+  }
+  return rp(options)
 }

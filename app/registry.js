@@ -25,6 +25,7 @@ function saveRegistry(obj){
   jsonfile.writeFile(config.get('registryFile'), obj, function (err) {
     if(err) throw err;    
     bot.logger.info("Registry persisted.")
+    return loadRegistry();
   })
 }
 function addNewBot(botAddress){
@@ -36,9 +37,10 @@ function addNewBot(botAddress){
       "Name":res["name"],
       "Address":botAddress.body.address,
       "Description":res["desc"],
+      "Status":"Initializing",
       "Operations":res["operations"]
     }
-    bot.logger.info(JSON.stringify(botInfo));
+    //bot.logger.info(JSON.stringify(botInfo));
     list.push(botInfo);
     saveRegistry(list);
   });
@@ -47,11 +49,27 @@ function addNewBot(botAddress){
 }
 
 function serialize(){
-  loadRegistry();
-  //bot.logger.info("eh" + list);
+  updateRegistry()
   return list;
 }
+function updateRegistry(){
+  loadRegistry();
+  var promiseList = list.map(function(itm, index){
+    //bot.logger.info(JSON.stringify(itm))
+    return getEndpoint(itm.Address + "/status")
+    .then(function(res){
+      list[index]["Status"] = res["state"];
+      //bot.logger.info(itm["Status"])
+      //bot.logger.info(JSON.stringify(list))
+    })
+  })
 
+  Promise.all(promiseList)
+  .then(function(res){
+    //bot.logger.info(JSON.stringify(list))
+    saveRegistry(list);
+  })
+}
 
 function getBotInfo(ip){
   var options = {
@@ -69,13 +87,31 @@ function getBotInfo(ip){
       bot.logger.error(err.toString());
     })
 }
+function getEndpoint(ip){
+  var options = {
+    uri: "http://"+ip,
+    json: true,
 
+  }
+  bot.logger.info(options.uri)
+
+  return rp(options)
+    .then(function(itm) {
+      //bot.logger.info(itm);
+      return itm;
+    })
+    .catch(function(err) {
+      bot.logger.error(err.toString());
+    })
+}
 //make this pull the bots info from list once given an ID
 function runBot(runInfo){
+  bot.logger.info("Running bots: " + JSON.stringify(runInfo))
   return postEndpoint(runInfo["BotAddress"] + runInfo["Path"]);
 }
 function postEndpoint(uri){
   var options = {
+    method: 'POST',
     uri: "http://" + uri,
     json: true,
   }

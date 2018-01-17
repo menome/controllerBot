@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "[ \"$NODE_ENV\" = \"production\" ] && npm run prod || npm run dev",
-    "dev": "node ./node_modules/nodemon/bin/nodemon.js app/app.js",
+    "dev": "node ./node_modules/nodemon/bin/nodemon.js --ignore 'registry.json' app/app.js",
     "prod": "./node_modules/forever/bin/forever --minUptime 5000 --spinSleepTime 1000 app/app.js",
     "test": "./node_modules/mocha/bin/mocha -C test"
   }

@@ -16,6 +16,11 @@ bot.configure({
 });
 
 // Register our add bot endpoint.
+//  POST
+//  application/json
+//  {
+//   "address":"localhost:3009"
+//  }
 bot.registerEndpoint({
   "name": "Register",
   "path": "/register",
@@ -47,7 +52,13 @@ bot.registerEndpoint({
   )
 });
 
-//register an endpoint to pull registered bot information
+//register an endpoint to start a bots operation
+//  POST
+//  application/json
+//  {
+//   "botName":"theLink Data Refinery Service"
+//   "operationId":"Status"
+//  }
 bot.registerEndpoint({
   "name": "Start",
   "path": "/start",

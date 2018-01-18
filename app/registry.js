@@ -105,15 +105,33 @@ function getEndpoint(ip){
     })
 }
 //make this pull the bots info from list once given an ID
+//  {
+//   "botName":"theLink Data Refinery Service"
+//   "operationId":"Status"
+//  }
 function runBot(runInfo){
   bot.logger.info("Running bots: " + JSON.stringify(runInfo))
-  return postEndpoint(runInfo["BotAddress"] + runInfo["Path"]);
+  var found = list.find(function(element){
+    return element["Name"] === runInfo["botName"];
+  })
+  var op = found["Operations"].find(function(element){
+    return element["name"] === runInfo["operationId"];
+  })
+  return hitEndpoint(found["Address"] + op["path"], op["method"]);
 }
-function postEndpoint(uri){
+
+function hitEndpoint(uri, type){
   var options = {
-    method: 'POST',
+    method: type,
     uri: "http://" + uri,
     json: true,
   }
   return rp(options)
+  .then(function(itm) {
+    //bot.logger.info(itm);
+    return itm;
+  })
+  .catch(function(err) {
+    bot.logger.error(err.toString());
+  })
 }

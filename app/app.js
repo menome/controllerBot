@@ -43,13 +43,17 @@ bot.registerEndpoint({
   "method": "GET",
   "desc": "Gets JSON detailing status of all bots"
 }, function(req,res) {
-  res.send(
-    bot.responseWrapper({
-      status: "success",
-      message: "Obtained registry",
-      registry: registry.serialize()
-    })
-  )
+  registry.serialize()
+  .then(function(response){
+    res.send(
+      bot.responseWrapper({
+        status: "success",
+        message: "Obtained registry",
+        registry: response
+      })
+    )
+  })
+
 });
 
 //register an endpoint to start a bots operation

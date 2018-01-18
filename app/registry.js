@@ -16,17 +16,30 @@ function initialize(){
   list = loadRegistry();
 }
 function loadRegistry(){
-  jsonfile.readFile(config.get('registryFile'), function(err, obj) {
-    if(err) return [];
-    return list = obj;
-  })
+  return new Promise(function(resolve, reject) {
+		jsonfile.readFile(config.get('registryFile'), function(err, obj) {
+			if (err) {
+				reject(err);
+			} else {
+        list = obj;
+				resolve(obj);
+			}
+
+		});
+  });
+
 }
 function saveRegistry(obj){
-  jsonfile.writeFile(config.get('registryFile'), obj, function (err) {
-    if(err) throw err;    
-    bot.logger.info("Registry persisted.")
-    return loadRegistry();
-  })
+  return new Promise(function(resolve, reject) {
+		jsonfile.writeFile(config.get('registryFile'), obj, function(err, obj) {
+			if (err) {
+				reject(err);
+			} else {
+        bot.logger.info("Registry Persisted.")
+				resolve();
+			}
+		});
+  });
 }
 function addNewBot(botAddress){
   bot.logger.info(botAddress.body.address);
@@ -49,25 +62,41 @@ function addNewBot(botAddress){
 }
 
 function serialize(){
-  updateRegistry()
-  return list;
-}
-function updateRegistry(){
-  loadRegistry();
-  var promiseList = list.map(function(itm, index){
-    //bot.logger.info(JSON.stringify(itm))
-    return getEndpoint(itm.Address + "/status")
+  return new Promise(function(resolve, reject) {
+    updateRegistry()
     .then(function(res){
-      list[index]["Status"] = res["state"];
-      //bot.logger.info(itm["Status"])
-      //bot.logger.info(JSON.stringify(list))
+      //bot.logger.info( "RESULT  " + JSON.stringify(res))
+      return resolve(res);
     })
   })
+}
 
-  Promise.all(promiseList)
-  .then(function(res){
-    //bot.logger.info(JSON.stringify(list))
-    saveRegistry(list);
+function updateRegistry(){
+  //loadRegistry();
+  return new Promise(function(resolve, reject) {
+    var promiseList = list.map(function(itm, index){
+      //bot.logger.info(JSON.stringify(itm))
+      return getEndpoint(itm.Address + "/status")
+      .then(function(res){
+        list[index]["Status"] = res["state"];
+        //bot.logger.info(itm["Status"])
+        //bot.logger.info(JSON.stringify(list))
+      })
+      .catch(function(err) {
+        //bot.logger.error(err.toString());
+        list[index]["Status"] = "Error Contacting Bot: Bot offline";
+      })
+    })
+
+    Promise.all(promiseList)
+    .then(function(res){
+      //bot.logger.info(JSON.stringify(list))
+      saveRegistry(list)
+      .then(function(){
+        resolve(list);
+      })
+    })
+    
   })
 }
 
@@ -93,15 +122,12 @@ function getEndpoint(ip){
     json: true,
 
   }
-  bot.logger.info(options.uri)
+  bot.logger.info("Getting bot information at: " + options.uri)
 
   return rp(options)
     .then(function(itm) {
       //bot.logger.info(itm);
       return itm;
-    })
-    .catch(function(err) {
-      bot.logger.error(err.toString());
     })
 }
 //make this pull the bots info from list once given an ID

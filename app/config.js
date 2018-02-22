@@ -14,8 +14,13 @@ var config = convict({
   registryFile: {
     doc:"The persistent file location for containing regsitered bots",
     format: "*",
-    default: "registry.json",
+    default: "./config/registry.json",
     env: "REGISTRY_FILE_LOCATION"
+  },
+  defaultRegistries: {
+    doc: "The default addresses for the bots we're going to monitor. If there is no registry, start by adding these to the registry.",
+    format: Array,
+    default: []
   }
 });
 

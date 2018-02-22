@@ -6,6 +6,8 @@
 var bot = require('@menome/botframework')
 var config = require('./config.js');
 var registry = require('./registry.js');
+var status = require('./status.js');
+var dispatcher = require('./dispatcher.js');
 
 // We only need to do this once. Bot is a singleton.
 bot.configure({
@@ -27,60 +29,95 @@ bot.registerEndpoint({
   "method": "POST",
   "desc": "Add a new bot to the managment registry"
 }, function(req,res) {
-  registry.addNewBot(req);
-  res.send(
-    bot.responseWrapper({
-      status: "success",
-      message: "Bot added to Registry"
-    })
-  )
+  registry.register(req.body.address).then((result) => {
+    res.send(
+      bot.responseWrapper({
+        status: "success",
+        message: result
+      })
+    )
+  }).catch(err => {
+    res.status(400).send(bot.responseWrapper({
+      status: "failure",
+      message: err.toString()
+    }))
+  });
+  
 });
 
 //register an endpoint to pull bot information
 bot.registerEndpoint({
-  "name": "Serialize",
-  "path": "/serialize",
+  "name": "Get Registry",
+  "path": "/registry",
   "method": "GET",
-  "desc": "Gets JSON detailing status of all bots"
+  "desc": "Gets JSON detailing all known bots"
 }, function(req,res) {
-  registry.serialize()
+  registry.get()
   .then(function(response){
     res.send(
       bot.responseWrapper({
         status: "success",
         message: "Obtained registry",
-        registry: response
+        data: response
       })
     )
   })
-
 });
+
+bot.registerEndpoint({
+  "name": "Get Status of all Bots",
+  "path": "/botstatus",
+  "method": "GET",
+  "desc": "Gets JSON detailing the current status of bots"
+}, function(req,res) {
+  return status.get().then((statusObj) => {
+    return res.send(
+      bot.responseWrapper({
+        status: "success",
+        message: "Obtained Bot Status",
+        data: statusObj
+      })
+    )
+  })
+})
 
 //register an endpoint to start a bots operation
 //  POST
 //  application/json
 //  {
-//   "botName":"theLink Data Refinery Service"
+//   "id": 0
 //   "operationId":"Status"
 //  }
 bot.registerEndpoint({
-  "name": "Start",
-  "path": "/start",
+  "name": "Dispatch",
+  "path": "/dispatch",
   "method": "POST",
-  "desc": "Given a bots id and operation, start that bots task"
+  "desc": "Run a bot's operations."
 }, function(req,res) {
-  registry.runBot(req.body)
-  .then(function(response){
-    res.send(
+  dispatcher.dispatch({
+    id: req.body.id, 
+    operation: req.body.operation
+  }).then((result) => {
+    return res.send(
       bot.responseWrapper({
         status: "success",
-        message: response
+        message: "Operation Dispatched",
+        data: result
       })
     )
-  });
+  }).catch((err) => {
+    return res.send(
+      bot.responseWrapper({
+        status: "failure",
+        message: err.toString()
+      })
+    )
+  })
+
+  
 });
 
-registry.initialize();
 // Start the bot.
+registry.initialize();
 bot.start();
 bot.changeState({state: "idle"})

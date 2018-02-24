@@ -19,6 +19,11 @@ function get() {
       promiseList.push(getStatus(itm.address).then((status) => {
         status.name = itm.name
         statuses[idx] = status;
+      }).catch((err) => {
+        statuses[idx] = {
+          name: itm.name,
+          state: err.toString()
+        }
       }))
     })
 

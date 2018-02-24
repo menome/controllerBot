@@ -29,7 +29,7 @@ bot.registerEndpoint({
   "method": "POST",
   "desc": "Add a new bot to the managment registry"
 }, function(req,res) {
-  registry.register(req.body.address).then((result) => {
+  return registry.register(req.body.address).then((result) => {
     res.send(
       bot.responseWrapper({
         status: "success",
@@ -42,7 +42,42 @@ bot.registerEndpoint({
       message: err.toString()
     }))
   });
-  
+});
+
+// Register our add bot endpoint.
+//  DELETE ?id=<number>
+bot.registerEndpoint({
+  "name": "Delete Bot",
+  "path": "/bot",
+  "method": "DELETE",
+  "desc": "Remove a bot by its ID",
+  "params": [
+    {
+      "name": "ID",
+      "desc": "The ID of the bot entry to remove from the controller list"
+    }
+  ]
+}, function(req,res) {
+  var idNum = parseInt(req.query.id);
+  if(isNaN(idNum)) return res.json(
+    bot.responseWrapper({ status: "failure", message: "Not a valid bot ID." })
+  )
+
+  return registry.remove(idNum).then((msg) => {
+    return res.json(
+      bot.responseWrapper({
+        status: "success",
+        message: msg
+      })
+    )
+  }).catch((err) => {
+    return res.json(
+      bot.responseWrapper({
+        status: "failure",
+        message: err
+      })
+    )
+  })
 });
 
 //register an endpoint to pull bot information
@@ -113,8 +148,6 @@ bot.registerEndpoint({
       })
     )
   })
-
-  
 });
 
 // Start the bot.

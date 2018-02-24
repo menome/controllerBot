@@ -15,20 +15,31 @@ var fs = require('fs');
 module.exports = {
   initialize,
   register,
-  get
+  get,
+  remove
 }
 
 var registry = [];
 
+// Initialize the registry. This is done on app startup.
 function initialize() {
+  // If we don't have a registry file, create a new one.
+  // use the default config to make it.
   if(!fs.existsSync(config.get('registryFile'))) {
-    fs.writeFileSync(config.get('registryFile'), JSON.stringify([]));
+    initialConfig = config.get("defaultRegistries").map((itm,idx) => {
+      return {
+        id: idx,
+        address: itm
+      }
+    })
+    fs.writeFileSync(config.get('registryFile'), JSON.stringify(initialConfig));
     bot.logger.info("Registry does not exist. Creating registry.")
   }
     
-  registry = loadRegistry();
+  loadRegistry().then(updateRegistry);
 }
 
+// Load registry from a file.
 function loadRegistry() {
   return new Promise(function (resolve, reject) {
     jsonfile.readFile(config.get('registryFile'), function (err, obj) {
@@ -42,6 +53,7 @@ function loadRegistry() {
   });
 }
 
+// Dump registry to a file.
 function saveRegistry(obj) {
   return new Promise(function (resolve, reject) {
     jsonfile.writeFile(config.get('registryFile'), obj, function (err, obj) {
@@ -55,19 +67,25 @@ function saveRegistry(obj) {
   });
 }
 
+// Registers a new bot. Throws an exception with a message if registration failed.
 function register(url) {
-  return getBotInfo(url)
+  var options = {
+    uri: "http://"+url,
+    json: true,
+  }
+
+  var newid = Math.max(registry.map(x=>x.id)) + 1 || 0;
+
+  return rp(options)
     .then(function (res) {
-      //bot.logger.info(JSON.stringify(res))
       var botInfo = {
-        "id": registry.length,
+        "id": newid,
         "name": res["name"],
         "desc": res["desc"],
         "operations": res["operations"],
         "address": url,
         "last_update": new Date()
       }
-      //bot.logger.info(JSON.stringify(botInfo));
       registry.push(botInfo);
       saveRegistry(registry);
       return "Added " + res["name"]
@@ -78,10 +96,27 @@ function get() {
   return updateRegistry()
 }
 
+function remove(id) {
+  var idx = registry.findIndex((x) => {return x.id === id});
+
+  if(idx === -1) return Promise.reject("Could not find bot with ID "+id)
+  else {
+    registry.splice(idx,1);
+    return saveRegistry(registry).then(() => {return "Deleted bot with ID "+id})
+  }
+}
+
+// Updates the registry by hitting every bot's / endpoint.
 function updateRegistry() {
   var promiseList = registry.map(function (itm, index) {
+    var options = {
+      uri: "http://"+itm.address,
+      json: true,
+    }
+    bot.logger.info("Getting bot information at: " + options.uri)
+
     //bot.logger.info(JSON.stringify(itm))
-    return getEndpoint(itm.address)
+    return rp(options)
       .then(function (res) {
         registry[index]["desc"] = res["desc"];
         registry[index]["name"] = res["name"];
@@ -99,57 +134,3 @@ function updateRegistry() {
     return saveRegistry(registry).then(()=>{return registry})
   })
 }
-
-function getBotInfo(ip) {
-  var options = {
-    uri: "http://" + ip,
-    json: true,
-  }
-
-  return rp(options);
-}
-
-function getEndpoint(ip) {
-  var options = {
-    uri: "http://" + ip,
-    json: true,
-  }
-  bot.logger.info("Getting bot information at: " + options.uri)
-
-  return rp(options)
-    .then(function (itm) {
-      return itm;
-    })
-}
-/*
-//make this pull the bots info from list once given an ID
-//  {
-//   "botName":"theLink Data Refinery Service"
-//   "operationId":"Status"
-//  }
-function runBot(runInfo) {
-  bot.logger.info("Running bots: " + JSON.stringify(runInfo))
-  var found = registry.find(function (element) {
-    return element["Name"] === runInfo["botName"];
-  })
-  var op = found["Operations"].find(function (element) {
-    return element["name"] === runInfo["operationId"];
-  })
-  return hitEndpoint(found["Address"] + op["path"], op["method"]);
-}
-
-function hitEndpoint(uri, type) {
-  var options = {
-    method: type,
-    uri: "http://" + uri,
-    json: true,
-  }
-  return rp(options)
-    .then(function (itm) {
-      //bot.logger.info(itm);
-      return itm;
-    })
-    .catch(function (err) {
-      bot.logger.error(err.toString());
-    })
-}*/

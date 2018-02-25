@@ -11,6 +11,7 @@
     "node-cache": "latest"
   },
   "devDependencies": {
+    "concurrently": "3.1.0",
     "chai": "^4.1.0",
     "mocha": "^3.4.2",
     "mock-require": "^2.0.1",
@@ -18,8 +19,10 @@
   },
   "scripts": {
     "start": "[ \"$NODE_ENV\" = \"production\" ] && npm run prod || npm run dev",
-    "dev": "node ./node_modules/nodemon/bin/nodemon.js --ignore 'registry.json' app/app.js",
     "prod": "./node_modules/forever/bin/forever --minUptime 5000 --spinSleepTime 1000 app/app.js",
+    "dev": "concurrently \"npm run devserver\" \"npm run devclient\"",
+    "devserver": "node ./node_modules/nodemon/bin/nodemon.js --ignore 'registry.json' app/app.js",
+    "devclient": "node start-client.js",
     "test": "./node_modules/mocha/bin/mocha -C test"
   }
 }

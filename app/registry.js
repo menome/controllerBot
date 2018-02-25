@@ -11,6 +11,7 @@ var bot = require('@menome/botframework');
 var jsonfile = require('jsonfile')
 var rp = require('request-promise');
 var fs = require('fs');
+const nodeCache = require('node-cache')
 
 module.exports = {
   initialize,
@@ -18,6 +19,14 @@ module.exports = {
   get,
   remove
 }
+
+// Take 10 minutes to reload the registry cache. This shouldn't refresh much.
+// const registry = new NodeCache( { stdTTL: 600 } );
+
+// // When our registry expires, update it.
+// registry.on("expired", function( key, value ){
+//   if(key === 'registry') updateRegistry();
+// });
 
 var registry = [];
 
@@ -92,8 +101,10 @@ function register(url) {
     })
 }
 
-function get() {
-  return updateRegistry()
+function get({forceRefresh}) {
+  if(forceRefresh) return updateRegistry();
+  
+  return Promise.resolve(registry);
 }
 
 function remove(id) {

@@ -10,9 +10,9 @@ module.exports = {
   get
 }
 
-function get() {
+function get({forceRefresh}) {
   var statuses = {};
-  return registry.get().then((itms) => {
+  return registry.get({forceRefresh: false}).then((itms) => {
     var promiseList = [];
 
     itms.forEach((itm,idx) => {
@@ -21,7 +21,8 @@ function get() {
       }).catch((err) => {
         statuses[itm.id] = {
           name: itm.name,
-          state: err.toString()
+          state: "error",
+          message: err.toString()
         }
       }))
     })

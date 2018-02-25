@@ -17,22 +17,6 @@ bot.configure({
   port: config.get('port'),
 });
 
-// This adds headers for CORS.
-bot.web.use(function (req, res, next) {
-  // var thisOrigin = req.get("Origin");
-  // if(thisOrigin && conf.allowedOrigins.indexOf(req.get("Origin") !== -1))
-  res.setHeader('Access-Control-Allow-Origin', "http://localhost:3001");
-
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-
-  if(req.method === 'OPTIONS')
-    res.sendStatus(200);
-  else
-    next();
-});
-
 // Register our add bot endpoint.
 //  POST
 //  application/json
@@ -69,7 +53,7 @@ bot.registerEndpoint({
   "desc": "Remove a bot by its ID",
   "params": [
     {
-      "name": "ID",
+      "name": "id",
       "desc": "The ID of the bot entry to remove from the controller list"
     }
   ]
@@ -101,10 +85,17 @@ bot.registerEndpoint({
   "name": "Get Registry",
   "path": "/registry",
   "method": "GET",
-  "desc": "Gets JSON detailing all known bots"
+  "desc": "Gets JSON detailing all known bots",
+  "params": [
+    {
+      "name": "forcerefresh",
+      "desc": "If true, force a refresh of the registry before returning. Do not use the cache."
+    }
+  ]
 }, function(req,res) {
-  registry.get()
-  .then(function(response){
+  var forceRefresh = req.query.forcerefresh === "true";
+
+  registry.get({forceRefresh}).then(function(response){
     res.send(
       bot.responseWrapper({
         status: "success",
@@ -119,9 +110,17 @@ bot.registerEndpoint({
   "name": "Get Status of all Bots",
   "path": "/botstatus",
   "method": "GET",
-  "desc": "Gets JSON detailing the current status of bots"
+  "desc": "Gets JSON detailing the current status of bots",
+  "params": [
+    {
+      "name": "forcerefresh",
+      "desc": "If true, force a refresh of the bot statuses before returning. Do not use the cache."
+    }
+  ]
 }, function(req,res) {
-  return status.get().then((statusObj) => {
+  var forceRefresh = req.query.forcerefresh === "true";
+
+  return status.get({forceRefresh}).then((statusObj) => {
     return res.send(
       bot.responseWrapper({
         status: "success",

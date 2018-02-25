@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@menome/botframework": "^1.0.10",
+    "@menome/botframework": "^1.0.11",
     "convict": "latest",
     "request": "latest",
     "request-promise": "latest",
@@ -11,10 +11,10 @@
     "node-cache": "latest"
   },
   "devDependencies": {
-    "mocha": "^3.4.2",
     "chai": "^4.1.0",
-    "nodemon": "latest",
-    "mock-require": "^2.0.1"
+    "mocha": "^3.4.2",
+    "mock-require": "^2.0.1",
+    "nodemon": "^1.15.1"
   },
   "scripts": {
     "start": "[ \"$NODE_ENV\" = \"production\" ] && npm run prod || npm run dev",

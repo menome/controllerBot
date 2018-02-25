@@ -11,15 +11,18 @@ module.exports = {
   dispatch
 }
 
-function dispatch({id, operation, body}) {
+function dispatch({id, path, method, params}) {
   return registry.get().then((reg) => {
-    var thisOp = reg[id].operations.find((x)=>{return x.name === operation});
-    if(!thisOp) return console.error("Operation not found");
+    var thisBot = reg.find(x=>x.id === id);
+    if(!thisBot) throw new Error("No bot with this ID found");
+    var thisOp = thisBot.operations.find((x)=>{return (x.method === method && x.path === path) });
+    if(!thisOp) throw new Error("Operation not found");
 
     var options = {
       json: true,
       method: thisOp.method,
-      uri: "http://"+reg[id].address + thisOp.path
+      qs: params,
+      uri: "http://"+thisBot.address + thisOp.path
     }
 
     return rp(options)

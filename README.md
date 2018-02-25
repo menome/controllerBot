@@ -1,2 +1,3 @@
-# photoBot
-Post processing bot that pulls employee photos 
+# ControllerBot
+
+Bot that controls other bots.

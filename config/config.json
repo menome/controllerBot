@@ -1,5 +1,5 @@
 {
-  "port": 3051,
+  "port": 3000,
   "registryFile": "./config/registry.json",
   "defaultRegistries": [
     "http://localhost:3005",

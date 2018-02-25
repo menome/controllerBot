@@ -17,10 +17,9 @@ function get() {
 
     itms.forEach((itm,idx) => {
       promiseList.push(getStatus(itm.address).then((status) => {
-        status.name = itm.name
-        statuses[idx] = status;
+        statuses[itm.id] = status;
       }).catch((err) => {
-        statuses[idx] = {
+        statuses[itm.id] = {
           name: itm.name,
           state: err.toString()
         }

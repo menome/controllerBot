@@ -17,6 +17,22 @@ bot.configure({
   port: config.get('port'),
 });
 
+// This adds headers for CORS.
+bot.web.use(function (req, res, next) {
+  // var thisOrigin = req.get("Origin");
+  // if(thisOrigin && conf.allowedOrigins.indexOf(req.get("Origin") !== -1))
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:3001");
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  if(req.method === 'OPTIONS')
+    res.sendStatus(200);
+  else
+    next();
+});
+
 // Register our add bot endpoint.
 //  POST
 //  application/json
@@ -120,8 +136,10 @@ bot.registerEndpoint({
 //  POST
 //  application/json
 //  {
-//   "id": 0
-//   "operationId":"Status"
+//   "id": 0,
+//   "path":"/sync",
+//   "method":"POST",
+//   "params": {"key": "val"}
 //  }
 bot.registerEndpoint({
   "name": "Dispatch",
@@ -131,7 +149,9 @@ bot.registerEndpoint({
 }, function(req,res) {
   dispatcher.dispatch({
     id: req.body.id, 
-    operation: req.body.operation
+    path: req.body.path,
+    method: req.body.method,
+    params: req.body.params,
   }).then((result) => {
     return res.send(
       bot.responseWrapper({

@@ -9,7 +9,7 @@ import WebService from "./webservice";
 // Starts the scheduled job of getting info from the API.
 export function dispatchFunc({id, method, path, params}) {
   var body = { id, method, path, params }
-  return WebService.post('/dispatch', body).then((result) => {
+  return WebService.post('/api/dispatch', body).then((result) => {
     return result;
   }).catch((err) => {
     console.log(err)
@@ -19,7 +19,7 @@ export function dispatchFunc({id, method, path, params}) {
 
 export function deleteBot({id}) {
   var body = { id }
-  return WebService.delete('/bot', body).then((result) => {
+  return WebService.delete('/api/bot', body).then((result) => {
     return result;
   }).catch((err) => {
     console.log(err)
@@ -32,7 +32,7 @@ export function addBot({address}) {
     address: address
   }
   
-  return WebService.post('/register', body).then((result) => {
+  return WebService.post('/api/register', body).then((result) => {
     return result;
   }).catch((err) => {
     console.log(err)

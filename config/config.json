@@ -1,6 +1,7 @@
 {
   "port": 3000,
   "registryFile": "./config/registry.json",
+  "urlprefix": "/api",
   "defaultRegistries": [
     "http://localhost:3005",
     "http://localhost:3009"

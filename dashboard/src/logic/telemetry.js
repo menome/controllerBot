@@ -29,14 +29,14 @@ export function stop() {
 // Refreshes the data from the API.
 function refresh(force=false) {
   store.dispatch(changeLoading(true));
-  WebService.get('/registry', {forcerefresh: force}).then((result) => {
+  WebService.get('/api/registry', {forcerefresh: force}).then((result) => {
     return store.dispatch(changeRegistry(result.body.data));  
   }).catch((err) => {
     store.dispatch(changeLoading(false));
     return console.log(err);
   });
 
-  WebService.get('/botstatus', {forcerefresh: force}).then((result) => {
+  WebService.get('/api/botstatus', {forcerefresh: force}).then((result) => {
     return store.dispatch(changeBotStatus(result.body.data));  
   }).catch((err) => {
     store.dispatch(changeLoading(false));

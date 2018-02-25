@@ -15,6 +15,7 @@ bot.configure({
   desc: "Hosts a registration endpoint for bots to connect to and a react dashboard for user interaction.",
   logging: config.get('logging'),
   port: config.get('port'),
+  urlprefix: config.get('urlprefix'),
 });
 
 // Register our add bot endpoint.
@@ -163,7 +164,7 @@ bot.registerEndpoint({
     return res.send(
       bot.responseWrapper({
         status: "failure",
-        message: err.toString()
+        message: err.body || err.toString()
       })
     )
   })

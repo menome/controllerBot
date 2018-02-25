@@ -12,7 +12,7 @@ module.exports = {
 }
 
 function dispatch({id, path, method, params}) {
-  return registry.get().then((reg) => {
+  return registry.get({forceRefresh: false}).then((reg) => {
     var thisBot = reg.find(x=>x.id === id);
     if(!thisBot) throw new Error("No bot with this ID found");
     var thisOp = thisBot.operations.find((x)=>{return (x.method === method && x.path === path) });

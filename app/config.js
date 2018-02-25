@@ -11,6 +11,7 @@ var bot = require('@menome/botframework')
 var config = convict({
   port: bot.configSchema.port,
   logging: bot.configSchema.logging,
+  urlprefix: bot.configSchema.urlprefix,
   registryFile: {
     doc:"The persistent file location for containing regsitered bots",
     format: "*",

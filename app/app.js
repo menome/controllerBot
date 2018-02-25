@@ -8,6 +8,7 @@ var config = require('./config.js');
 var registry = require('./registry.js');
 var status = require('./status.js');
 var dispatcher = require('./dispatcher.js');
+var express = require("express");
 
 // We only need to do this once. Bot is a singleton.
 bot.configure({
@@ -17,6 +18,11 @@ bot.configure({
   port: config.get('port'),
   urlprefix: config.get('urlprefix'),
 });
+
+// Express only serves static assets in production
+if (process.env.NODE_ENV === "production") {
+  bot.web.use(express.static("../dashboard/build"));
+}
 
 // Register our add bot endpoint.
 //  POST

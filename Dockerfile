@@ -4,25 +4,36 @@ FROM node:8.4.0
 
 EXPOSE 80
 ENV PORT 80
+ARG NPM_TOKEN
 
 # Commands will run in this directory
 RUN mkdir /srv/app
-WORKDIR /srv/app
-
-# Add build file
-COPY ./package.json package.json
+RUN mkdir /srv/dashboard
 
 # Handle NPM Token Management
-ARG NPM_TOKEN
-COPY .npmrc-deploy .npmrc
+COPY .npmrc-deploy /srv/app/.npmrc
+COPY .npmrc-deploy /srv/dashboard/.npmrc
+
+#############################
+## WE DO DASHBOARD STUFF.
+WORKDIR /srv/dashboard
+COPY ./dashboard/package.json package.json
+RUN npm install
+RUN rm -f .npmrc
+COPY ./dashboard .
+RUN npm run build
+
+############################
+## THEN NORMAL API STUFF
+WORKDIR /srv/app
+COPY ./package.json package.json
 
 # Install dependencies and generate production dist
 RUN npm install
-RUN rm -f .npmrc
+RUN rm -f /srv/app/.npmrc /srv/dashboard/.npmrc
 
-# Copy the code for the prod container.
-# This seems to not cause any problems in dev when we mount a volume at this point.
+# Copy in the rest of the code.
 COPY ./app app
 COPY ./config config
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "prod"]

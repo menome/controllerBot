@@ -1,14 +1,16 @@
 {
-  "name": "room-monitor",
-  "version": "0.1.0",
+  "name": "bot-controller",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@menome/botframework": "^1.1.1",
+    "express": "^4.16.2",
     "convict": "latest",
     "request": "latest",
     "request-promise": "latest",
     "jsonfile": "latest",
-    "node-cache": "latest"
+    "node-cache": "latest",
+    "forever": "latest"
   },
   "devDependencies": {
     "concurrently": "3.1.0",

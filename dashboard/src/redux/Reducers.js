@@ -13,7 +13,8 @@ const appReducers = combineReducers({
   botstatus,
   registry,
   loadingState,
-  lastUpdateTime
+  lastUpdateTime,
+  modal
 })
 
 // Change the user. Hold the user object, and also store whether or not we're actively authenticated.
@@ -47,6 +48,19 @@ function lastUpdateTime(state = -1, action) {
     case actions.CHANGE_REGISTRY:
     case actions.CHANGE_BOT_STATUS:
       return Date.now();
+    default: return state;
+  }
+}
+
+// Change the timestamp of the last update. -1 is never.
+function modal(state = {}, action) {
+  var newState = {...state};
+  switch(action.type) {
+    case actions.CHANGE_MODAL:
+      newState.open = action.open;
+      newState.title = action.title;
+      newState.body = action.body;
+      return newState;
     default: return state;
   }
 }

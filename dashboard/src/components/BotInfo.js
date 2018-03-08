@@ -4,9 +4,11 @@
  * Renders a room in the list of rooms.
  */
 import React from 'react';
-import { Collapse, List, Button, Modal, Icon } from 'antd';
+import { Collapse, List, Button, Icon } from 'antd';
+import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
 import {dispatchFunc, deleteBot} from "../logic/dispatcher";
+import {changeModal} from '../redux/Actions';
 
 class BotInfo extends React.Component {
   constructor(props) {
@@ -23,19 +25,13 @@ class BotInfo extends React.Component {
       path: action.path,
       method: action.method
     }).then((result) => {
-      this.setState({
-        modalVisible: true,
-        modalContent: result.body.data
-      })
+      this.props.updateModal({open: true, body: JSON.stringify(result.body.data,null,2)})
     });
   }
 
   deleteBot(id) {
     return deleteBot({id}).then((result) => {
-      this.setState({
-        modalVisible: true,
-        modalContent: result.body
-      })
+      this.props.updateModal({open: true, body: JSON.stringify(result.body,null,2)})
     })
   }
 
@@ -51,6 +47,7 @@ class BotInfo extends React.Component {
         <div>
           <h1>{this.props.bot.name}</h1>
           <p>{this.props.bot.desc}</p>
+          <p>Metadata Last Updated: {new Date(this.props.bot.last_update).toLocaleTimeString()}</p>
         </div>
         <Collapse bordered={false}>
           <Collapse.Panel header="Actions">
@@ -70,17 +67,18 @@ class BotInfo extends React.Component {
             />
           </Collapse.Panel>
         </Collapse>
-        <Modal
-          title="Call Result"
-          visible={this.state.modalVisible}
-          onOk={()=>{this.setState({modalVisible: false})}}
-          onCancel={()=>{this.setState({modalVisible: false})}}
-        >
-          <pre>{JSON.stringify(this.state.modalContent,null,2)}</pre>
-        </Modal>
       </div>
     )
   }
 }
 
-export default BotInfo;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateModal: (...args) => {dispatch(changeModal(...args))}
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(BotInfo);

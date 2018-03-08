@@ -34,8 +34,5 @@ export function addBot({address}) {
   
   return WebService.post('/api/register', body).then((result) => {
     return result;
-  }).catch((err) => {
-    console.log(err)
-    return err;
   })
 }

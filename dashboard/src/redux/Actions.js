@@ -22,3 +22,9 @@ export const CHANGE_LOADING = 'CHANGE_LOADING'
 export function changeLoading(loading) {
   return { type: CHANGE_LOADING, loading}
 }
+
+//Change whether or not the modal is open.
+export const CHANGE_MODAL = 'CHANGE_MODAL'
+export function changeModal({open, title, body}) {
+  return { type: CHANGE_MODAL, open, title, body}
+}

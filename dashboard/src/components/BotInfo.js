@@ -4,7 +4,7 @@
  * Renders a room in the list of rooms.
  */
 import React from 'react';
-import { Collapse, List, Button, Icon } from 'antd';
+import { Collapse, List, Button, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
 import {dispatchFunc, deleteBot} from "../logic/dispatcher";
@@ -40,9 +40,11 @@ class BotInfo extends React.Component {
       <div>
         <span style={{float: "right"}}>
           <BotStatusBadge style={{display: "inline"}} status={this.props.status}/>
-          <a onClick={this.deleteBot.bind(this, this.props.bot.id)}>
-            <Icon style={{fontSize: 32, color: "red"}} type="delete"/>
-          </a>
+          <Popconfirm placement="topRight" title="Are you sure you want to remove this bot?" onConfirm={this.deleteBot.bind(this, this.props.bot.id)}>
+            <a>
+              <Icon style={{fontSize: 32, color: "red"}} type="delete"/>
+            </a>
+          </Popconfirm>
         </span>
         <div>
           <h1>{this.props.bot.name}</h1>

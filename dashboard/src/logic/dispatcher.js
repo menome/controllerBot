@@ -4,6 +4,7 @@
  */
 // import {changeRegistry, changeBotStatus, changeLoading} from '../redux/Actions';
 import WebService from "./webservice";
+import {refresh} from './telemetry'
 // import store from '../redux/Store';
 
 // Starts the scheduled job of getting info from the API.
@@ -20,6 +21,7 @@ export function dispatchFunc({id, method, path, params}) {
 export function deleteBot({id}) {
   var body = { id }
   return WebService.delete('/api/bot', body).then((result) => {
+    refresh(true);
     return result;
   }).catch((err) => {
     console.log(err)
@@ -33,6 +35,7 @@ export function addBot({address}) {
   }
   
   return WebService.post('/api/register', body).then((result) => {
+    refresh(true);
     return result;
   })
 }

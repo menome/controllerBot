@@ -50,7 +50,7 @@ class BotActionItem extends React.Component {
                     {this.props.form.getFieldDecorator(param.name, {
                       rules: [{ required: param.required }],
                     })(
-                      <Input placeholder={param.name}/>
+                      <Input placeholder={param.desc}/>
                     )}
                   </Form.Item>
                 )
@@ -60,7 +60,7 @@ class BotActionItem extends React.Component {
             <Col span={4}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Run
                 </Button>
               </Form.Item>
             </Col>

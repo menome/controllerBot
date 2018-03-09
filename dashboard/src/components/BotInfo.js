@@ -4,11 +4,12 @@
  * Renders a room in the list of rooms.
  */
 import React from 'react';
-import { Collapse, List, Button, Icon, Popconfirm } from 'antd';
+import { Collapse, List, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
-import {dispatchFunc, deleteBot} from "../logic/dispatcher";
+import {deleteBot} from "../logic/dispatcher";
 import {changeModal} from '../redux/Actions';
+import BotActionItem from './BotActionItem';
 
 class BotInfo extends React.Component {
   constructor(props) {
@@ -17,16 +18,6 @@ class BotInfo extends React.Component {
       modalVisible: false,
       modalContent: ""
     }
-  }
-
-  runAction(action) {
-    return dispatchFunc({
-      id: this.props.bot.id,
-      path: action.path,
-      method: action.method
-    }).then((result) => {
-      this.props.updateModal({open: true, body: JSON.stringify(result.body.data,null,2)})
-    });
   }
 
   deleteBot(id) {
@@ -63,7 +54,7 @@ class BotInfo extends React.Component {
                     title={item.name}
                     description={item.desc}
                   />
-                  <Button type="primary" onClick={this.runAction.bind(this, item)}>Run</Button>
+                  <BotActionItem bot={this.props.bot} operation={item}/>
                 </List.Item>
               )}
             />

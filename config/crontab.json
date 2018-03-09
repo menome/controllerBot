@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "cronTime": "* * * * *",
+      "job": {
+        "id": 1,
+        "path": "/sync",
+        "method": "POST"
+      }
+    }
+  ]
+}

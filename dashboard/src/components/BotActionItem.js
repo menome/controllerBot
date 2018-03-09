@@ -13,9 +13,12 @@ class BotActionItem extends React.Component {
   runAction = (e) => {
     e.preventDefault();
     var params = {}
-    this.props.operation.params.forEach((param) => {
-      params[param.name] = this.props.form.getFieldValue(param.name);
-    })
+
+    if(Array.isArray(this.props.operation.params)) {
+      this.props.operation.params.forEach((param) => {
+        params[param.name] = this.props.form.getFieldValue(param.name);
+      })
+    }
 
     return dispatchFunc({
       id: this.props.bot.id,

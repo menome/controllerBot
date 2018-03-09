@@ -9,7 +9,7 @@ import {changeRegistry, changeBotStatus, changeLoading} from '../redux/Actions';
 import WebService from "./webservice";
 import store from '../redux/Store';
 
-const refreshIntervalFrequency = 5000; // Refresh every 5 seconds.
+const refreshIntervalFrequency = 10000; // Refresh every 10 seconds.
 var refreshInterval = false;
 
 // Starts the scheduled job of getting info from the API.

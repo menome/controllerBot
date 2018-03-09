@@ -9,6 +9,7 @@ var registry = require('./registry.js');
 var status = require('./status.js');
 var dispatcher = require('./dispatcher.js');
 var express = require("express");
+var scheduler = require('./scheduler')
 
 // We only need to do this once. Bot is a singleton.
 bot.configure({
@@ -176,7 +177,21 @@ bot.registerEndpoint({
   })
 });
 
+bot.registerEndpoint({
+  "name": "Get Cron Schedule",
+  "path": "/schedule",
+  "method": "GET",
+  "desc": "Gets a list of the controllerBot's scheduled tasks."
+}, function(req,res) {
+  return res.send(bot.responseWrapper({
+    status: "success",
+    message: "Obtained schedule",
+    data: scheduler.getSchedule()
+  }))
+});
+
 // Start the bot.
 registry.initialize();
+scheduler.initialize();
 bot.start();
 bot.changeState({state: "idle"})

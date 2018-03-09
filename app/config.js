@@ -22,7 +22,13 @@ var config = convict({
     doc: "The default addresses for the bots we're going to monitor. If there is no registry, start by adding these to the registry.",
     format: Array,
     default: []
-  }
+  },
+  cronFile: {
+    doc: "The persistent file location for storing what jobs are scheduled",
+    format: "*",
+    default: "./config/crontab.json",
+    env: "CRON_FILE_LOCATION"
+  },
 });
 
 // Load from file.

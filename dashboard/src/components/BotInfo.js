@@ -2,13 +2,12 @@
  * Copyright (C) 2017 Menome Technologies Inc.
  */
 import React from 'react';
-import { Collapse, List, Icon, Popconfirm, Button, Modal } from 'antd';
+import { Collapse, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
 import ActionForm from "./ActionForm";
 import {deleteBot} from "../logic/dispatcher";
 import {changeModal} from '../redux/Actions';
-// import BotActionItem from './BotActionItem';
 
 class BotInfo extends React.Component {
   constructor(props) {
@@ -18,11 +17,6 @@ class BotInfo extends React.Component {
       modalContent: ""
     }
   }
-
-  componentDidMount() {
-    console.log('info mount')
-  }
-  
 
   deleteBot(id) {
     return deleteBot({id}).then((result) => {
@@ -47,13 +41,13 @@ class BotInfo extends React.Component {
           <p>Metadata Last Updated: {new Date(this.props.bot.last_update).toLocaleTimeString()}</p>
         </div>
         <Collapse bordered={false}>
-              {this.props.bot.operations.filter(x=>x.path !== '/status').map((action) => {
-                return (
-                  <Collapse.Panel key={action.path} header={<span>{action.name} - <small>{action.desc}</small></span>}>
-                    <ActionForm bot={this.props.bot} action={action}/>
-                  </Collapse.Panel>
-                )
-              })}
+          {this.props.bot.operations.filter(x=>x.path !== '/status').map((action) => {
+            return (
+              <Collapse.Panel key={action.path} header={<span>{action.name} - <small>{action.desc}</small></span>}>
+                <ActionForm bot={this.props.bot} action={action}/>
+              </Collapse.Panel>
+            )
+          })}
         </Collapse>
       </div>
     )

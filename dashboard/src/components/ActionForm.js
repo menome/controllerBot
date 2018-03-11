@@ -20,7 +20,7 @@ class BotActionItem extends React.Component {
       })
     }
 
-    return addTask({
+    return dispatchFunc({
       id: this.props.bot.id,
       path: this.props.action.path,
       method: this.props.action.method,
@@ -52,7 +52,9 @@ class BotActionItem extends React.Component {
         method: this.props.action.method,
         params: params
       }
-    })
+    }).then((result) => {
+      this.props.updateModal({open: true, body: JSON.stringify(result.body,null,2)})
+    });
   }
 
   render() {
@@ -70,47 +72,57 @@ class BotActionItem extends React.Component {
     return (
       <div style={{flex: 1}}>
         <Form onSubmit={this.runAction}>
-          {this.props.action.params && this.props.action.params.map((param,idx) => {
-            return (
-              <Form.Item key={param.name} label={param.name} {...formItemLayout}>
-                {this.props.form.getFieldDecorator(param.name, {
-                  rules: [{ required: param.required }],
+          <Row gutter={12}>
+            <Col sm={24} md={12}>
+              <h3>Parameters</h3>
+              {(!this.props.action.params || this.props.action.params.length < 1) && <p>No Parameters on this action</p>}
+              {this.props.action.params && this.props.action.params.map((param,idx) => {
+                return (
+                  <Form.Item key={param.name} label={param.name} {...formItemLayout}>
+                    {this.props.form.getFieldDecorator(param.name, {
+                      rules: [{ required: param.required }],
+                    })(
+                      <Input placeholder={param.desc}/>
+                    )}
+                  </Form.Item>
+                )
+              })}
+              <Form.Item style={{textAlign: "right"}}>
+                <Button type="primary" htmlType="submit">
+                  Run Action
+                </Button>
+              </Form.Item>
+            </Col>
+            <Col sm={24} md={12}>
+              <h3>Scheduling</h3>
+              <Form.Item label={"Scheduled Task Name"} {...formItemLayout}>
+                {this.props.form.getFieldDecorator('SchedName', {
+                  rules: [{ required: false }],
                 })(
-                  <Input placeholder={param.desc}/>
+                  <Input placeholder="Name of Scheduled Action"/>
                 )}
               </Form.Item>
-            )
-          })}
-          <h3>For Scheduled Tasks</h3>
-          <Form.Item label={"Scheduled Task Name"} {...formItemLayout}>
-            {this.props.form.getFieldDecorator('SchedName', {
-              rules: [{ required: false }],
-            })(
-              <Input placeholder="Name of Scheduled Action"/>
-            )}
-          </Form.Item>
-          <Form.Item label={"Scheduled Task Description"} {...formItemLayout}>
-            {this.props.form.getFieldDecorator('SchedDesc', {
-              rules: [{ required: false }],
-            })(
-              <Input placeholder="Description of Scheduled Action"/>
-            )}
-          </Form.Item>
-          <Form.Item label={"Cron Time"} {...formItemLayout}>
-            {this.props.form.getFieldDecorator('cronTime', {
-              rules: [{ required: false }],
-            })(
-              <Input placeholder="Cron Time (Used for scheduling only)"/>
-            )}
-          </Form.Item>
-          <Form.Item style={{textAlign: "right"}}>
-            <Button onClick={this.scheduleJob} disabled={!this.props.form.getFieldValue('cronTime')}>
-              Schedule
-            </Button>
-            <Button type="primary" htmlType="submit">
-              Run
-            </Button>
-          </Form.Item>
+              <Form.Item label={"Scheduled Task Description"} {...formItemLayout}>
+                {this.props.form.getFieldDecorator('SchedDesc', {
+                  rules: [{ required: false }],
+                })(
+                  <Input placeholder="Description of Scheduled Action"/>
+                )}
+              </Form.Item>
+              <Form.Item label={"Cron Time"} {...formItemLayout}>
+                {this.props.form.getFieldDecorator('cronTime', {
+                  rules: [{ required: false }],
+                })(
+                  <Input placeholder="Cron Time (Used for scheduling only)"/>
+                )}
+              </Form.Item>
+              <Form.Item style={{textAlign: "right"}}>
+                <Button type="primary" onClick={this.scheduleJob} disabled={!this.props.form.getFieldValue('cronTime')}>
+                  Schedule Action
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </div>
     )

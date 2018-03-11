@@ -10,6 +10,7 @@ var status = require('./status.js');
 var dispatcher = require('./dispatcher.js');
 var express = require("express");
 var scheduler = require('./scheduler')
+var schema = require('./schema')
 
 // We only need to do this once. Bot is a singleton.
 bot.configure({
@@ -35,17 +36,23 @@ bot.registerEndpoint({
   "name": "Register",
   "path": "/register",
   "method": "POST",
-  "desc": "Add a new bot to the managment registry"
+  "desc": "Add a new bot to the managment registry. Specify address in body."
 }, function(req,res) {
+  if(!req.body || !req.body.address)
+    return res.send(bot.responseWrapper({
+      status: "failure",
+      message: "Specify an address field in the JSON body."
+    }))
+
   return registry.register(req.body.address).then((result) => {
-    res.send(
+    return res.send(
       bot.responseWrapper({
         status: "success",
         message: result
       })
     )
   }).catch(err => {
-    res.status(400).send(bot.responseWrapper({
+    return res.status(400).send(bot.responseWrapper({
       status: "failure",
       message: err.toString()
     }))
@@ -81,7 +88,7 @@ bot.registerEndpoint({
       })
     )
   }).catch((err) => {
-    return res.json(
+    return res.status(400).json(
       bot.responseWrapper({
         status: "failure",
         message: err
@@ -141,7 +148,7 @@ bot.registerEndpoint({
   })
 })
 
-//register an endpoint to start a bots operation
+//register an endpoint to start a bot's operation
 //  POST
 //  application/json
 //  {
@@ -156,6 +163,14 @@ bot.registerEndpoint({
   "method": "POST",
   "desc": "Run a bot's operations."
 }, function(req,res) {
+  var errors = schema.validate("dispatchTask",req.body);
+  if(!!errors)
+    return res.status(400).send(bot.responseWrapper({
+      status: "failure",
+      message: "Invalid dispatch call.",
+      data: errors
+    }))
+
   dispatcher.dispatch({
     id: req.body.id, 
     path: req.body.path,
@@ -170,7 +185,7 @@ bot.registerEndpoint({
       })
     )
   }).catch((err) => {
-    return res.send(
+    return res.status(500).send(
       bot.responseWrapper({
         status: "failure",
         message: err.body || err.toString()

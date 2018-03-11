@@ -43,7 +43,7 @@ class BotInfo extends React.Component {
         <Collapse bordered={false}>
           {this.props.bot.operations.filter(x=>x.path !== '/status').map((action) => {
             return (
-              <Collapse.Panel key={action.path} header={<span>{action.name} - <small>{action.desc}</small></span>}>
+              <Collapse.Panel key={action.path + "_" +action.method} header={<span>{action.name} - <small>{action.desc}</small> <span style={{float:"right", marginRight: "12px"}}>{action.method} {action.path}</span></span>}>
                 <ActionForm bot={this.props.bot} action={action}/>
               </Collapse.Panel>
             )

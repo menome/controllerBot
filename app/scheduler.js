@@ -11,11 +11,11 @@ var cron = require('cron');
 var fs = require('fs');
 var config = require('./config');
 var jsonfile = require('jsonfile')
+var schema = require('./schema')
 
 module.exports = {
   initialize,
   getSchedule,
-  setSchedule,
   addTask,
   deleteTask,
   deleteTasksForBot
@@ -65,7 +65,7 @@ function saveCrontab(crontab) {
 
 // Makes sure the crontab is scheduled and running.
 function schedule(crontab) {
-  // Flush entire schedule. TODO: Does this result in memory leaks?
+  // Flush entire schedule. TODO: Does this result in memory leaks? Or do these get garbage collected?
   _jobs.forEach(j=>{
     j.stop()
   });
@@ -86,7 +86,7 @@ function schedule(crontab) {
         }).then((result) => {
           bot.logger.info("Job Completed:", task.name || "Untitled Job");
         }).catch((err) => {
-          bot.logger.error(result)
+          bot.logger.error(err)
         })
       },
       start: !task.disable,
@@ -100,13 +100,17 @@ function getSchedule() {
   return _crontab;
 }
 
-// Set our crontab.
-function setSchedule(newSched) {
-  // TODO: Validation. Please.
-  return saveCrontab(newSched).then((crontab)=>{return schedule(crontab)})
-}
-
 function addTask(task) {
+  // Check if it has a valid cron timestamp.
+  // This will throw an exception if it's not.
+  try {
+    new cron.CronJob(task.cronTime);
+  }
+  catch(error) {
+    return Promise.reject("Invalid Cron Pattern")
+  }
+  
+
   // Each task needs a unique key.
   var newKey = 0;
   Object.keys(_crontab.tasks).forEach((key) => {
@@ -114,7 +118,6 @@ function addTask(task) {
       newKey = parseInt(key)+1;
   })
 
-  // TODO: Schema Validation. Please.
   _crontab.tasks[newKey] = task;
   return saveCrontab(_crontab).then((crontab)=>{
     schedule(crontab)
@@ -123,7 +126,11 @@ function addTask(task) {
 }
 
 function deleteTask(taskid) {
-  //TODO: Bounds check and stuff.
+  if(!_crontab.tasks[taskid.toString()]) throw new error("Could not run task with ID " + taskid);
+
+  if(typeof _crontab.tasks[taskid.toString()].stop === 'function')
+    _crontab.tasks[taskid.toString()].stop();
+
   delete _crontab.tasks[taskid.toString()];
   return saveCrontab(_crontab).then((crontab)=>{return schedule(crontab)})
 }
@@ -141,8 +148,11 @@ function deleteTasksForBot(botid) {
 }
 
 function runTask(taskid) {
-  //TODO: Bounds check and stuff.
   var task = _jobs[taskid]
+
+  if(!task || !task._callbacks || !task._callbacks[0])
+    throw new error("Could not run task with ID " + taskid);
+
   return task._callbacks[0]();
 }
 
@@ -166,6 +176,14 @@ function initializeEndpoints() {
     "method": "POST",
     "desc": "Add a job to the Cron schedule"
   }, function(req,res) {
+    var errors = schema.validate("cronTask",req.body);
+    if(!!errors)
+      return res.status(400).send(bot.responseWrapper({
+        status: "failure",
+        message: "Invalid task definition",
+        data: errors
+      }))
+  
     return addTask(req.body).then((id) => {
       return res.json(
         bot.responseWrapper({

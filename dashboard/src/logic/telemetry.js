@@ -5,7 +5,7 @@
  * Basically just keeps redux state information up to date.
  * Does all the refresh scheduling so you don't have to.
  */
-import {changeRegistry, changeBotStatus, changeLoading} from '../redux/Actions';
+import {changeRegistry, changeBotStatus, changeLoading, changeSchedule} from '../redux/Actions';
 import WebService from "./webservice";
 import store from '../redux/Store';
 
@@ -53,6 +53,15 @@ function refreshCall(force=false) {
   promises.push(
     WebService.get('/api/botstatus', {forcerefresh: force}).then((result) => {
       return store.dispatch(changeBotStatus(result.body.data));  
+    }).catch((err) => {
+      store.dispatch(changeLoading(false));
+      return console.log(err);
+    })
+  )
+
+  promises.push(
+    WebService.get('/api/schedule', {forcerefresh: force}).then((result) => {
+      return store.dispatch(changeSchedule(result.body.data));  
     }).catch((err) => {
       store.dispatch(changeLoading(false));
       return console.log(err);

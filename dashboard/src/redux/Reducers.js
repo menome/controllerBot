@@ -12,6 +12,7 @@ import * as actions from './Actions';
 const appReducers = combineReducers({
   botstatus,
   registry,
+  schedule,
   loadingState,
   lastUpdateTime,
   modal
@@ -29,6 +30,13 @@ function botstatus(state = [], action) {
 function registry(state = [], action) {
   switch(action.type) {
     case actions.CHANGE_REGISTRY: return action.registry;
+    default: return state;
+  }
+}
+
+function schedule(state = {tasks:{}}, action) {
+  switch(action.type) {
+    case actions.CHANGE_SCHEDULE: return action.schedule;
     default: return state;
   }
 }

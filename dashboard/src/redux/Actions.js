@@ -28,3 +28,9 @@ export const CHANGE_MODAL = 'CHANGE_MODAL'
 export function changeModal({open, title, body}) {
   return { type: CHANGE_MODAL, open, title, body}
 }
+
+//Change whether or not the modal is open.
+export const CHANGE_SCHEDULE = 'CHANGE_SCHEDULE'
+export function changeSchedule(schedule) {
+  return { type: CHANGE_SCHEDULE, schedule}
+}

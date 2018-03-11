@@ -1,1 +1,1 @@
-{"tasks":{"0":{"name":"Run JSON Placeholder Sync","desc":"Main sync of the JSON placeholder","cronTime":"* * * * *","job":{"id":1,"path":"/sync","method":"POST"}}}}
+{"tasks":{"0":{"name":"Run JSON Placeholder Sync","desc":"Main sync of the JSON placeholder","cronTime":"* * * * *","job":{"id":1,"path":"/sync","method":"POST"}},"1":{"name":"BST Main Sync","desc":"Sync of all of BST","cronTime":"* * * * *","job":{"id":2,"path":"/sync","method":"POST","params":{}}}}}

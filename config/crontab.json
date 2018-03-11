@@ -1,12 +1,1 @@
-{
-  "tasks": [
-    {
-      "cronTime": "* * * * *",
-      "job": {
-        "id": 1,
-        "path": "/sync",
-        "method": "POST"
-      }
-    }
-  ]
-}
+{"tasks":{"0":{"name":"Run JSON Placeholder Sync","desc":"Main sync of the JSON placeholder","cronTime":"* * * * *","job":{"id":1,"path":"/sync","method":"POST"}}}}

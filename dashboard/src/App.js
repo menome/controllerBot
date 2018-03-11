@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Layout, Input, Modal, Button, Spin, Divider } from 'antd';
 import {initialize, refresh} from './logic/telemetry';
 import BotPane from './components/BotPane';
+import CrontabPane from './components/scheduler/CrontabPane';
+import ActionForm from './components/ActionForm';
 import {addBot} from './logic/dispatcher';
 import {changeModal} from './redux/Actions';
 
@@ -47,6 +49,8 @@ class App extends Component {
             <span style={{marginLeft: "5px"}}>Last Status Update: {new Date(this.props.lastUpdateTime).toLocaleTimeString()}</span>
             <BotPane/>
           </div>
+          <Divider/>
+          <CrontabPane/>
         </Layout.Content>
         <Modal
           title={this.props.modal.title || "Call Result"}
@@ -65,7 +69,7 @@ const mapStateToProps = (state, ownProps) => {
 	return {
     loadingState: state.loadingState,
     lastUpdateTime: state.lastUpdateTime,
-    modal: state.modal,
+    modal: state.modal
   }
 }
 

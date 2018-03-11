@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@menome/botframework": "^1.1.1",
+    "@menome/botframework": "^1.1.2",
     "cron": "^1.3.0",
     "express": "^4.16.2",
     "convict": "latest",
@@ -24,7 +24,7 @@
     "start": "[ \"$NODE_ENV\" = \"production\" ] && npm run prod || npm run dev",
     "prod": "./node_modules/forever/bin/forever --minUptime 5000 --spinSleepTime 1000 app/app.js",
     "dev": "concurrently \"npm run devserver\" \"npm run devclient\"",
-    "devserver": "node ./node_modules/nodemon/bin/nodemon.js --ignore 'registry.json' app/app.js",
+    "devserver": "node ./node_modules/nodemon/bin/nodemon.js --ignore 'registry.json' --ignore 'crontab.json' app/app.js",
     "devclient": "node start-client.js",
     "test": "./node_modules/mocha/bin/mocha -C test"
   }

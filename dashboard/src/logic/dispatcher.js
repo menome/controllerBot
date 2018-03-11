@@ -39,3 +39,35 @@ export function addBot({address}) {
     return result;
   })
 }
+
+export function deleteTask({id}) {
+  var params = { id }
+  return WebService.delete('/api/schedule', params).then((result) => {
+    refresh(true);
+    return result;
+  }).catch((err) => {
+    console.log(err)
+    return err;
+  })
+}
+
+export function runTask({id}) {
+  var params = { id }
+  return WebService.post('/api/schedule/run', {}, params).then((result) => {
+    refresh(true);
+    return result;
+  }).catch((err) => {
+    console.log(err)
+    return err;
+  })
+}
+
+export function addTask(cronJob) {
+  return WebService.post('/api/schedule', cronJob).then((result) => {
+    refresh(true);
+    return result;
+  }).catch((err) => {
+    console.log(err)
+    return err;
+  })
+}

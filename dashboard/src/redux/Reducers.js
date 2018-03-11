@@ -52,7 +52,6 @@ function lastUpdateTime(state = -1, action) {
   }
 }
 
-// Change the timestamp of the last update. -1 is never.
 function modal(state = {}, action) {
   var newState = {...state};
   switch(action.type) {

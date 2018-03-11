@@ -1,7 +1,5 @@
 /**
  * Copyright (C) 2017 Menome Technologies Inc.
- * 
- * Renders a room in the list of rooms.
  */
 import React from 'react';
 import { connect } from 'react-redux';

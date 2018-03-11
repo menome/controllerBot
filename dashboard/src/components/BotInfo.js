@@ -1,15 +1,14 @@
 /**
  * Copyright (C) 2017 Menome Technologies Inc.
- * 
- * Renders a room in the list of rooms.
  */
 import React from 'react';
-import { Collapse, List, Icon, Popconfirm } from 'antd';
+import { Collapse, List, Icon, Popconfirm, Button, Modal } from 'antd';
 import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
+import ActionForm from "./ActionForm";
 import {deleteBot} from "../logic/dispatcher";
 import {changeModal} from '../redux/Actions';
-import BotActionItem from './BotActionItem';
+// import BotActionItem from './BotActionItem';
 
 class BotInfo extends React.Component {
   constructor(props) {
@@ -19,6 +18,11 @@ class BotInfo extends React.Component {
       modalContent: ""
     }
   }
+
+  componentDidMount() {
+    console.log('info mount')
+  }
+  
 
   deleteBot(id) {
     return deleteBot({id}).then((result) => {
@@ -43,22 +47,13 @@ class BotInfo extends React.Component {
           <p>Metadata Last Updated: {new Date(this.props.bot.last_update).toLocaleTimeString()}</p>
         </div>
         <Collapse bordered={false}>
-          <Collapse.Panel header="Actions">
-            <List
-              itemLayout="horizontal"
-              size="large"
-              dataSource={this.props.bot.operations.filter(x=>x.path !== '/status')}
-              renderItem={(item,idx) => (
-                <List.Item key={idx}>
-                  <List.Item.Meta
-                    title={item.name}
-                    description={item.desc}
-                  />
-                  <BotActionItem bot={this.props.bot} operation={item}/>
-                </List.Item>
-              )}
-            />
-          </Collapse.Panel>
+              {this.props.bot.operations.filter(x=>x.path !== '/status').map((action) => {
+                return (
+                  <Collapse.Panel key={action.path} header={<span>{action.name} - <small>{action.desc}</small></span>}>
+                    <ActionForm bot={this.props.bot} action={action}/>
+                  </Collapse.Panel>
+                )
+              })}
         </Collapse>
       </div>
     )

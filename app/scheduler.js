@@ -18,6 +18,7 @@ module.exports = {
   setSchedule,
   addTask,
   deleteTask,
+  deleteTasksForBot
 }
 
 var _jobs = []; // Keep our running jobs in here.
@@ -124,6 +125,18 @@ function addTask(task) {
 function deleteTask(taskid) {
   //TODO: Bounds check and stuff.
   delete _crontab.tasks[taskid.toString()];
+  return saveCrontab(_crontab).then((crontab)=>{return schedule(crontab)})
+}
+
+function deleteTasksForBot(botid) {
+  var keys = Object.keys(_crontab.tasks);
+  // We should be able to iterate through this object and delete keys without any issue.
+  // Because javascript.
+  keys.forEach((key) => {
+    if(_crontab.tasks[key].job.id === botid)
+      delete _crontab.tasks[key];
+  })
+  
   return saveCrontab(_crontab).then((crontab)=>{return schedule(crontab)})
 }
 

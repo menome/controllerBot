@@ -5,7 +5,7 @@
 "use strict";
 
 var rp = require('request-promise');
-var registry = require('./registry.js');
+var registry = require('./registry');
 
 module.exports = {
   dispatch

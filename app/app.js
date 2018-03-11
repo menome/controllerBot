@@ -72,6 +72,8 @@ bot.registerEndpoint({
   )
 
   return registry.remove(idNum).then((msg) => {
+    // Delete all relevant scheduled tasks.
+    scheduler.deleteTasksForBot(idNum);
     return res.json(
       bot.responseWrapper({
         status: "success",

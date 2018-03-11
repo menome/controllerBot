@@ -5,7 +5,6 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import webservice from '../../logic/webservice';
 import TaskInfo from './TaskInfo';
 
 class BotPane extends React.Component {

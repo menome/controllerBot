@@ -114,7 +114,7 @@ class BotActionItem extends React.Component {
                 {this.props.form.getFieldDecorator('cronTime', {
                   rules: [{ required: false }],
                 })(
-                  <Input placeholder="Cron Time (Used for scheduling only)"/>
+                  <Input placeholder="Cron Time"/>
                 )}
               </Form.Item>
               {this.props.form.getFieldValue('cronTime') && cronstrue.toString(this.props.form.getFieldValue('cronTime'), {throwExceptionOnParseError: false})}

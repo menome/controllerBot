@@ -31,7 +31,7 @@ function initialize() {
   // If we don't have a registry file, create a new one.
   // use the default config to make it.
   if(!fs.existsSync(config.get('cronFile'))) {
-    bot.logger.info("Registry does not exist. Creating registry.")
+    bot.logger.info("Crontab does not exist. Creating crontab.")
     var initialConfig = {tasks:{}};
     fs.writeFileSync(config.get('cronFile'), JSON.stringify(initialConfig));
   }
@@ -110,7 +110,6 @@ function addTask(task) {
     return Promise.reject("Invalid Cron Pattern")
   }
   
-
   // Each task needs a unique key.
   var newKey = 0;
   Object.keys(_crontab.tasks).forEach((key) => {

@@ -1,1 +1,0 @@
-{"tasks":{"0":{"name":"JSON Placeholder Sync","desc":"Self Explanatory","cronTime":"* * * * *","job":{"id":3,"path":"/sync","method":"POST","params":{}}},"1":{"name":"Unicorn Farts","desc":"Main sync of the JSON placeholder","cronTime":"0 0 * * *","job":{"id":1,"path":"/sync","method":"POST"}}}}

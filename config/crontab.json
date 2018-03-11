@@ -1,1 +1,1 @@
-{"tasks":{}}
+{"tasks":{"0":{"name":"JSON Placeholder Sync","desc":"Self Explanatory","cronTime":"* * * * *","job":{"id":3,"path":"/sync","method":"POST","params":{}}}}}

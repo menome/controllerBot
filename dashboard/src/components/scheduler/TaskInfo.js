@@ -9,6 +9,7 @@ import { Collapse, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import {changeModal} from '../../redux/Actions';
 import {deleteTask, runTask} from '../../logic/dispatcher';
+import cronstrue from 'cronstrue';
 
 class BotInfo extends React.Component {
   constructor(props) {
@@ -44,8 +45,8 @@ class BotInfo extends React.Component {
         <div>
           <h1>{this.props.task.name}</h1>
           <p><b>Task ID:</b> {this.props.taskid}</p>
-          <p>{this.props.task.desc}</p>
-          <p>{this.props.task.cronTime}</p>
+          <p><b>Description:</b> {this.props.task.desc}</p>
+          <p><b>Cron Schedule</b> <span style={{fontFamily: "courier"}}>{this.props.task.cronTime}</span> ({cronstrue.toString(this.props.task.cronTime, {throwExceptionOnParseError: false})})</p>
         </div>
 
         <Collapse bordered={false}>

@@ -8,6 +8,7 @@ import { Button, Form, Input, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import {dispatchFunc, addTask} from "../logic/dispatcher";
 import {changeModal} from '../redux/Actions';
+import cronstrue from 'cronstrue';
 
 class BotActionItem extends React.Component {
   runAction = (e) => {
@@ -116,6 +117,7 @@ class BotActionItem extends React.Component {
                   <Input placeholder="Cron Time (Used for scheduling only)"/>
                 )}
               </Form.Item>
+              {this.props.form.getFieldValue('cronTime') && cronstrue.toString(this.props.form.getFieldValue('cronTime'), {throwExceptionOnParseError: false})}
               <Form.Item style={{textAlign: "right"}}>
                 <Button type="primary" onClick={this.scheduleJob} disabled={!this.props.form.getFieldValue('cronTime')}>
                   Schedule Action

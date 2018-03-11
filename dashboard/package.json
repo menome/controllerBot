@@ -9,6 +9,7 @@
   "dependencies": {
     "antd": "^3.2.1",
     "forever": "latest",
+    "cronstrue": "^1.1.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",

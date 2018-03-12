@@ -5,9 +5,9 @@ import React from 'react';
 import { Collapse, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
-import ActionForm from "./ActionForm";
-import {deleteBot} from "../logic/dispatcher";
-import {changeModal} from '../redux/Actions';
+import ActionForm from "../ActionForm";
+import {deleteBot} from "../../logic/dispatcher";
+import {changeModal} from '../../redux/Actions';
 
 class BotInfo extends React.Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Layout, Input, Modal, Button, Spin, Divider } from 'antd';
 import {initialize, refresh} from './logic/telemetry';
-import BotPane from './components/BotPane';
+import BotPane from './components/bot/BotPane';
 import CrontabPane from './components/scheduler/CrontabPane';
 import {addBot} from './logic/dispatcher';
 import {changeModal} from './redux/Actions';

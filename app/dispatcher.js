@@ -11,7 +11,7 @@ module.exports = {
   dispatch
 }
 
-function dispatch({id, path, method, params}) {
+function dispatch({id, path, method, params, body}) {
   return registry.get({forceRefresh: false}).then((reg) => {
     var thisBot = reg.find(x=>x.id === id);
     if(!thisBot) throw new Error("No bot with this ID found");
@@ -22,7 +22,9 @@ function dispatch({id, path, method, params}) {
       json: true,
       method: thisOp.method,
       qs: params,
-      uri: "http://"+thisBot.address + thisOp.path
+      uri: "http://"+thisBot.address + thisOp.path,
+      body: body,
+      json: true
     }
 
     return rp(options)

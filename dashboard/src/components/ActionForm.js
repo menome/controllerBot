@@ -4,16 +4,26 @@
  * Control for executing or scheduling bot tasks.
  */
 import React from 'react';
-import { Button, Form, Input, Row, Col } from 'antd';
+import { Button, Form, Input, Row, Col, Modal } from 'antd';
 import { connect } from 'react-redux';
 import {dispatchFunc, addTask} from "../logic/dispatcher";
 import {changeModal} from '../redux/Actions';
 import cronstrue from 'cronstrue';
 
+const isValidJson = (str) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 class BotActionItem extends React.Component {
   runAction = (e) => {
     e.preventDefault();
     var params = {}
+    var body = this.props.form.getFieldValue('body');
 
     if(Array.isArray(this.props.action.params)) {
       this.props.action.params.forEach((param) => {
@@ -21,11 +31,18 @@ class BotActionItem extends React.Component {
       })
     }
 
+    if(!!body && !isValidJson(body))
+      return Modal.error({
+        title: "Invalid Body",
+        content: "The body you entered is not valid JSON."
+      })
+
     return dispatchFunc({
       id: this.props.bot.id,
       path: this.props.action.path,
       method: this.props.action.method,
-      params: params
+      params: params,
+      body: body ? JSON.parse(body) : undefined
     }).then((result) => {
       this.props.updateModal({open: true, body: JSON.stringify(result.body.data,null,2)})
     });
@@ -36,12 +53,19 @@ class BotActionItem extends React.Component {
     var cronTime = this.props.form.getFieldValue('cronTime');
     var taskName = this.props.form.getFieldValue('SchedName');
     var taskDesc = this.props.form.getFieldValue('SchedDesc');
+    var body = this.props.form.getFieldValue('body');
 
     if(Array.isArray(this.props.action.params)) {
       this.props.action.params.forEach((param) => {
         params[param.name] = this.props.form.getFieldValue(param.name);
       })
     }
+
+    if(!!body && !isValidJson(body))
+      return Modal.error({
+        title: "Invalid Body",
+        content: "The body you entered is not valid JSON."
+      })
 
     return addTask({
       name: taskName,
@@ -51,8 +75,9 @@ class BotActionItem extends React.Component {
         id: this.props.bot.id,
         path: this.props.action.path,
         method: this.props.action.method,
-        params: params
-      }
+        params: params,
+        body: body ? JSON.parse(body) : undefined
+      },
     }).then((result) => {
       this.props.updateModal({open: true, body: JSON.stringify(result.body,null,2)})
     });
@@ -76,7 +101,7 @@ class BotActionItem extends React.Component {
           <Row gutter={12}>
             <Col sm={24} md={12}>
               <h3>Parameters</h3>
-              {(!this.props.action.params || this.props.action.params.length < 1) && <p>No Parameters on this action</p>}
+              {(!this.props.action.body && (!this.props.action.params || this.props.action.params.length < 1)) && <p>No Parameters on this action</p>}
               {this.props.action.params && this.props.action.params.map((param,idx) => {
                 return (
                   <Form.Item key={param.name} label={param.name} {...formItemLayout}>
@@ -88,6 +113,15 @@ class BotActionItem extends React.Component {
                   </Form.Item>
                 )
               })}
+              {this.props.action.body && (
+                <Form.Item key={"body"} label="Request Body" {...formItemLayout}>
+                  {this.props.form.getFieldDecorator("body", {
+                    rules: [{ required: false }],
+                  })(
+                    <Input.TextArea rows={6} placeholder={"JSON Body of Request"}/>
+                  )}
+                </Form.Item>
+              )}
               <Form.Item style={{textAlign: "right"}}>
                 <Button type="primary" htmlType="submit">
                   Run Action

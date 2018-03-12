@@ -44,6 +44,10 @@ const dispatchTask = {
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "body": {
+      "type": "object",
+      "description": "The body of the HTTP request."
     }
   }
 }

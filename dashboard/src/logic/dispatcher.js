@@ -8,9 +8,9 @@ import {refresh} from './telemetry'
 // import store from '../redux/Store';
 
 // Starts the scheduled job of getting info from the API.
-export function dispatchFunc({id, method, path, params}) {
-  var body = { id, method, path, params }
-  return WebService.post('/api/dispatch', body).then((result) => {
+export function dispatchFunc({id, method, path, params, body}) {
+  var dispatchBody = { id, method, path, params, body }
+  return WebService.post('/api/dispatch', dispatchBody).then((result) => {
     return result;
   }).catch((err) => {
     console.log(err)

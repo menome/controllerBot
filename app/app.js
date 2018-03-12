@@ -176,6 +176,7 @@ bot.registerEndpoint({
     path: req.body.path,
     method: req.body.method,
     params: req.body.params,
+    body: req.body.body
   }).then((result) => {
     return res.send(
       bot.responseWrapper({

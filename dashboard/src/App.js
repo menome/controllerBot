@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   forceRefresh() {
-    refresh();
+    refresh(true);
   }
 
   render() {

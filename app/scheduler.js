@@ -173,7 +173,8 @@ function initializeEndpoints() {
     "name": "Add Scheduled Task",
     "path": "/schedule",
     "method": "POST",
-    "desc": "Add a job to the Cron schedule"
+    "desc": "Add a job to the Cron schedule",
+    "body": true
   }, function(req,res) {
     var errors = schema.validate("cronTask",req.body);
     if(!!errors)

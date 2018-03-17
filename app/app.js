@@ -36,7 +36,8 @@ bot.registerEndpoint({
   "name": "Register",
   "path": "/register",
   "method": "POST",
-  "desc": "Add a new bot to the managment registry. Specify address in body."
+  "desc": "Add a new bot to the managment registry. Specify address in body.",
+  "body": true
 }, function(req,res) {
   if(!req.body || !req.body.address)
     return res.send(bot.responseWrapper({
@@ -161,7 +162,8 @@ bot.registerEndpoint({
   "name": "Dispatch",
   "path": "/dispatch",
   "method": "POST",
-  "desc": "Run a bot's operations."
+  "desc": "Run a bot's operations.",
+  "body": true
 }, function(req,res) {
   var errors = schema.validate("dispatchTask",req.body);
   if(!!errors)

@@ -83,12 +83,14 @@ function register(url) {
     json: true,
   }
 
-  var newid = Math.max(registry.map(x=>x.id)) + 1 || 0;
+  var highestId = registry.map(x=>x.id).reduce((a,b) => {
+    return Math.max(a,b);
+  },0)
 
   return rp(options)
     .then(function (res) {
       var botInfo = {
-        "id": newid,
+        "id": highestId+1,
         "name": res["name"],
         "desc": res["desc"],
         "operations": res["operations"],

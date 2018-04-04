@@ -36,7 +36,7 @@ class BotInfo extends React.Component {
           </Popconfirm>
         </span>
         <div>
-          <h1>{this.props.bot.name}</h1>
+          <h1>{this.props.bot.name} {this.props.bot.nickname && <small>- {this.props.bot.nickname}</small>}</h1>
           <p>{this.props.bot.desc}</p>
           <p>Metadata Last Updated: {new Date(this.props.bot.last_update).toLocaleTimeString()}</p>
         </div>

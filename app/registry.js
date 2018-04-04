@@ -92,6 +92,7 @@ function register(url) {
       var botInfo = {
         "id": highestId+1,
         "name": res["name"],
+        "nickname": res["nickname"],
         "desc": res["desc"],
         "operations": res["operations"],
         "address": url,
@@ -133,6 +134,7 @@ function updateRegistry() {
       .then(function (res) {
         registry[index]["desc"] = res["desc"];
         registry[index]["name"] = res["name"];
+        registry[index]["nickname"] = res["nickname"];
         registry[index]["operations"] = res["operations"];
         registry[index]["last_update"] = new Date();
         delete registry[index]["last_update_failed"];

@@ -29,6 +29,13 @@ var config = convict({
     default: "./config/crontab.json",
     env: "CRON_FILE_LOCATION"
   },
+  controllerPassword: {
+    doc: "Password that the user will need in order to use the controller bot. Username is admin. Authentication method is HTTP Basic.",
+    format: "String",
+    default: undefined,
+    env: "CONTROLLER_PASSWORD",
+    sensitive: true
+  }
 });
 
 // Load from file.

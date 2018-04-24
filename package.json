@@ -6,6 +6,7 @@
     "@menome/botframework": "^1.1.2",
     "ajv": "^5.2.3",
     "cron": "^1.3.0",
+    "express-basic-auth": "^1.1.5",
     "express": "^4.16.2",
     "convict": "latest",
     "request": "latest",

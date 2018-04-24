@@ -11,6 +11,7 @@ var dispatcher = require('./dispatcher.js');
 var express = require("express");
 var scheduler = require('./scheduler')
 var schema = require('./schema')
+const basicAuth = require('express-basic-auth')
 
 // We only need to do this once. Bot is a singleton.
 bot.configure({
@@ -20,6 +21,17 @@ bot.configure({
   port: config.get('port'),
   urlprefix: config.get('urlprefix'),
 });
+
+if(!!config.get("controllerPassword")) {
+  bot.web.use(basicAuth({
+    users: {"admin": config.get("controllerPassword")},
+    challenge: true,
+
+    // Used for credential replay within a single browser (so we don't have to re-authenticate for literally every web call.)
+    // Having this hard-coded shouldn't hinder security as long as we're on SSL and can trust our DNS.
+    realm: "8h2vKpVQ8ReA8Ko2" 
+  }))
+}
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {

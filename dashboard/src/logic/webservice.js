@@ -41,6 +41,7 @@ export default (() => {
       
       return fetch(url + paramStr, {
         method: "GET",
+        credentials: "include"
       }).then(handleHttpError).then(handleResult);
     },
     post: function(url, body, params) {
@@ -48,6 +49,7 @@ export default (() => {
 
       return fetch(url + paramStr, {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify(body),
         headers: {"Content-Type": "application/json"},
       }).then(handleHttpError).then(handleResult);
@@ -57,6 +59,7 @@ export default (() => {
 
       return fetch(url+paramStr, {
         method: "DELETE",
+        credentials: "include",
       }).then(handleHttpError).then(handleResult);
     },
     put: function(url, body, params) {
@@ -64,6 +67,7 @@ export default (() => {
 
       return fetch(url+paramStr, {
         method: "PUT",
+        credentials: "include",
         body: body,
       }).then(handleHttpError).then(handleResult);
     },

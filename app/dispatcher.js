@@ -23,8 +23,7 @@ function dispatch({id, path, method, params, body}) {
       method: thisOp.method,
       qs: params,
       uri: "http://"+thisBot.address + thisOp.path,
-      body: body,
-      json: true
+      body: body
     }
 
     return rp(options)

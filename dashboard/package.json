@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3000",
-  "devDependencies": {
-    "react-scripts": "1.0.11"
-  },
+  "devDependencies": {},
   "dependencies": {
     "antd": "^3.2.1",
     "forever": "latest",
@@ -17,7 +15,8 @@
     "react-redux": "^5.0.2",
     "express": "^4.15.2",
     "history": "^4.6.3",
-    "react-fa": "^4.2.0"
+    "react-fa": "^4.2.0",
+    "react-scripts": "1.0.11"
   },
   "scripts": {
     "start": "react-scripts start",

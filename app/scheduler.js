@@ -30,12 +30,12 @@ function initialize() {
   initializeEndpoints();
   // If we don't have a registry file, create a new one.
   // use the default config to make it.
-  if(!fs.existsSync(config.get('cronFile'))) {
+  if (!fs.existsSync(config.get('cronFile'))) {
     bot.logger.info("Crontab does not exist. Creating crontab.")
-    var initialConfig = {tasks:{}};
+    var initialConfig = { tasks: {} };
     fs.writeFileSync(config.get('cronFile'), JSON.stringify(initialConfig));
   }
-    
+
   loadCrontab().then((tab) => {
     schedule(tab)
   });
@@ -66,7 +66,7 @@ function saveCrontab(crontab) {
 // Makes sure the crontab is scheduled and running.
 function schedule(crontab) {
   // Flush entire schedule. TODO: Does this result in memory leaks? Or do these get garbage collected?
-  _jobs.forEach(j=>{
+  _jobs.forEach(j => {
     j.stop()
   });
   _jobs = [];
@@ -75,7 +75,7 @@ function schedule(crontab) {
     var task = crontab.tasks[key];
     _jobs[key] = new cron.CronJob({
       cronTime: task.cronTime,
-      onTick: function() {
+      onTick: function () {
         bot.logger.info("Running Job:", task.name || "Untitled Job");
 
         return dispatcher.dispatch({
@@ -106,32 +106,32 @@ function addTask(task) {
   try {
     new cron.CronJob(task.cronTime);
   }
-  catch(error) {
+  catch (error) {
     return Promise.reject("Invalid Cron Pattern")
   }
-  
+
   // Each task needs a unique key.
   var newKey = 0;
   Object.keys(_crontab.tasks).forEach((key) => {
-    if(parseInt(key) >= newKey)
-      newKey = parseInt(key)+1;
+    if (parseInt(key) >= newKey)
+      newKey = parseInt(key) + 1;
   })
 
   _crontab.tasks[newKey] = task;
-  return saveCrontab(_crontab).then((crontab)=>{
+  return saveCrontab(_crontab).then((crontab) => {
     schedule(crontab)
     return newKey
   })
 }
 
 function deleteTask(taskid) {
-  if(!_crontab.tasks[taskid.toString()]) throw new error("Could not run task with ID " + taskid);
+  if (!_crontab.tasks[taskid.toString()]) throw new error("Could not run task with ID " + taskid);
 
-  if(typeof _crontab.tasks[taskid.toString()].stop === 'function')
+  if (typeof _crontab.tasks[taskid.toString()].stop === 'function')
     _crontab.tasks[taskid.toString()].stop();
 
   delete _crontab.tasks[taskid.toString()];
-  return saveCrontab(_crontab).then((crontab)=>{return schedule(crontab)})
+  return saveCrontab(_crontab).then((crontab) => { return schedule(crontab) })
 }
 
 function deleteTasksForBot(botid) {
@@ -139,18 +139,30 @@ function deleteTasksForBot(botid) {
   // We should be able to iterate through this object and delete keys without any issue.
   // Because javascript.
   keys.forEach((key) => {
-    if(_crontab.tasks[key].job.id === botid)
+    if (_crontab.tasks[key].job.id === botid)
       delete _crontab.tasks[key];
   })
-  
-  return saveCrontab(_crontab).then((crontab)=>{return schedule(crontab)})
+
+  return saveCrontab(_crontab).then((crontab) => { return schedule(crontab) })
 }
 
 function runTask(taskid) {
   var task = _jobs[taskid]
 
-  if(!task || !task._callbacks || !task._callbacks[0])
+  if (!task || !task._callbacks || !task._callbacks[0])
     throw new error("Could not run task with ID " + taskid);
+
+  if (task.params) {
+    console.log(task.params)
+    console.log("c===3|--------------------(_)*(_)-------------------------|8===D")
+    task.params = task.params.replace(/@\{(\w+)\}/g, function (match, group) {
+      if (group === 'todayShortDate') {
+        var datetime = new Date();
+        return datetime.toISOString().slice(0,10);      
+      }      
+    });
+    console.log(task.params)
+  }
 
   return task._callbacks[0]();
 }
@@ -161,7 +173,7 @@ function initializeEndpoints() {
     "path": "/schedule",
     "method": "GET",
     "desc": "Gets a list of the controllerBot's scheduled tasks."
-  }, function(req,res) {
+  }, function (req, res) {
     return res.send(bot.responseWrapper({
       status: "success",
       message: "Obtained schedule",
@@ -175,20 +187,20 @@ function initializeEndpoints() {
     "method": "POST",
     "desc": "Add a job to the Cron schedule",
     "body": true
-  }, function(req,res) {
-    var errors = schema.validate("cronTask",req.body);
-    if(!!errors)
+  }, function (req, res) {
+    var errors = schema.validate("cronTask", req.body);
+    if (!!errors)
       return res.status(400).send(bot.responseWrapper({
         status: "failure",
         message: "Invalid task definition",
         data: errors
       }))
-  
+
     return addTask(req.body).then((id) => {
       return res.json(
         bot.responseWrapper({
           status: "success",
-          message: "Added Task with ID: "+id
+          message: "Added Task with ID: " + id
         })
       )
     }).catch((err) => {
@@ -213,9 +225,9 @@ function initializeEndpoints() {
         "desc": "The ID of the task to delete"
       }
     ]
-  }, function(req,res) {
+  }, function (req, res) {
     var idNum = parseInt(req.query.id);
-    if(isNaN(idNum)) return res.json(
+    if (isNaN(idNum)) return res.json(
       bot.responseWrapper({ status: "failure", message: "Not a valid task ID." })
     )
 
@@ -223,7 +235,7 @@ function initializeEndpoints() {
       return res.json(
         bot.responseWrapper({
           status: "success",
-          message: "Deleted Task with ID "+idNum
+          message: "Deleted Task with ID " + idNum
         })
       )
     }).catch((err) => {
@@ -248,9 +260,9 @@ function initializeEndpoints() {
         "desc": "The ID of the task to run"
       }
     ]
-  }, function(req,res) {
+  }, function (req, res) {
     var idNum = parseInt(req.query.id);
-    if(isNaN(idNum)) return res.json(
+    if (isNaN(idNum)) return res.json(
       bot.responseWrapper({ status: "failure", message: "Not a valid task ID." })
     )
 

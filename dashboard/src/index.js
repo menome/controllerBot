@@ -6,19 +6,19 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import store from './redux/Store';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import { LocaleProvider } from 'antd';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 ReactDOM.render( 
   <Router>
-    <LocaleProvider locale={enUS}>
+    <ConfigProvider locale={enUS}>
       <Provider store={store}>
-        <Switch>
+        <Routes>
           <Route path="/" component={App}/>
-        </Switch>
+        </Routes>
       </Provider>
-    </LocaleProvider>
+    </ConfigProvider>
   </Router>,  
   document.getElementById('root')
 );

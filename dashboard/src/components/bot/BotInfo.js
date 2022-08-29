@@ -2,7 +2,8 @@
  * Copyright (C) 2017 Menome Technologies Inc.
  */
 import React from 'react';
-import { Collapse, Icon, Popconfirm } from 'antd';
+import { Collapse, Popconfirm } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux';
 import BotStatusBadge from "./BotStatusBadge";
 import ActionForm from "../ActionForm";
@@ -31,7 +32,7 @@ class BotInfo extends React.Component {
           <BotStatusBadge style={{display: "inline"}} status={this.props.status}/>
           <Popconfirm placement="topRight" title="Are you sure you want to remove this bot?" onConfirm={this.deleteBot.bind(this, this.props.bot.id)}>
             <a>
-              <Icon style={{fontSize: 32, color: "red"}} type="delete"/>
+              <CloseCircleOutlined /> style={{fontSize: 32, color: "red"}} />
             </a>
           </Popconfirm>
         </span>

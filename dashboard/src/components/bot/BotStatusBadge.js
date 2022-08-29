@@ -4,7 +4,8 @@
  * Renders a room in the list of rooms.
  */
 import React from 'react';
-import { Popover, Icon } from 'antd';
+import { Popover } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons'
 const botStates = {
   "idle": {
     "color": "green",
@@ -42,7 +43,7 @@ class BotInfo extends React.Component {
     return (
       <span>
         <Popover placement="leftTop" title={this.props.status.state} content={this.props.status.message || "(No Status Message)"}>
-          <Icon style={{fontSize: 32, color: info.color}} type={info.icon}/>
+          <InfoCircleOutlined style={{fontSize: 32, color: info.color}} />
         </Popover>
       </span>
     )

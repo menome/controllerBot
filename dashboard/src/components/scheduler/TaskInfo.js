@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-import { Collapse, Icon, Popconfirm } from 'antd';
+import { Collapse, Popconfirm } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux';
 import {changeModal} from '../../redux/Actions';
 import {deleteTask, runTask} from '../../logic/dispatcher';
@@ -37,9 +38,9 @@ class BotInfo extends React.Component {
       <div>
         <span style={{float: "right"}}>
           <Popconfirm placement="topRight" title="Are you sure you want to remove this task?" onConfirm={this.deleteTask.bind(this)}>
-            <a><Icon style={{fontSize: 32, color: "red"}} type="delete"/></a>
+            <a><Delete style={{fontSize: 32, color: "red"}} /></a>
           </Popconfirm>
-          <Icon onClick={this.runTask.bind(this)} style={{fontSize: 32, color: "green"}} type="caret-right"/>
+          <CloseCircleOutlined onClick={this.runTask.bind(this)} style={{fontSize: 32, color: "green"}} type="caret-right"/>
         </span>
 
         <div>

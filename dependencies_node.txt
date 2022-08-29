@@ -31,7 +31,89 @@ bot-controller@1.1.0 /mnt/e/Development/happy_meal/bots/controllerBot
 │ │ │ ├── iconv-lite@0.4.19 deduped
 │ │ │ └── unpipe@1.0.0 deduped
 │ │ └── type-is@1.6.16 deduped
-│ ├── express@4.16.2 deduped
+│ ├─┬ express@4.17.1
+│ │ ├─┬ accepts@1.3.7
+│ │ │ ├─┬ mime-types@2.1.27
+│ │ │ │ └── mime-db@1.44.0
+│ │ │ └── negotiator@0.6.2
+│ │ ├── array-flatten@1.1.1 deduped
+│ │ ├─┬ body-parser@1.19.0
+│ │ │ ├── bytes@3.1.0
+│ │ │ ├── content-type@1.0.4 deduped
+│ │ │ ├── debug@2.6.9 deduped
+│ │ │ ├── depd@1.1.2 deduped
+│ │ │ ├─┬ http-errors@1.7.2
+│ │ │ │ ├── depd@1.1.2 deduped
+│ │ │ │ ├── inherits@2.0.3 deduped
+│ │ │ │ ├── setprototypeof@1.1.1 deduped
+│ │ │ │ ├── statuses@1.5.0 deduped
+│ │ │ │ └── toidentifier@1.0.0
+│ │ │ ├─┬ iconv-lite@0.4.24
+│ │ │ │ └── safer-buffer@2.1.2 deduped
+│ │ │ ├── on-finished@2.3.0 deduped
+│ │ │ ├── qs@6.7.0 deduped
+│ │ │ ├─┬ raw-body@2.4.0
+│ │ │ │ ├── bytes@3.1.0 deduped
+│ │ │ │ ├── http-errors@1.7.2 deduped
+│ │ │ │ ├── iconv-lite@0.4.24 deduped
+│ │ │ │ └── unpipe@1.0.0 deduped
+│ │ │ └── type-is@1.6.18 deduped
+│ │ ├─┬ content-disposition@0.5.3
+│ │ │ └── safe-buffer@5.1.2 deduped
+│ │ ├── content-type@1.0.4 deduped
+│ │ ├── cookie@0.4.0
+│ │ ├── cookie-signature@1.0.6 deduped
+│ │ ├── debug@2.6.9 deduped
+│ │ ├── depd@1.1.2 deduped
+│ │ ├── encodeurl@1.0.2 deduped
+│ │ ├── escape-html@1.0.3 deduped
+│ │ ├── etag@1.8.1 deduped
+│ │ ├─┬ finalhandler@1.1.2
+│ │ │ ├── debug@2.6.9 deduped
+│ │ │ ├── encodeurl@1.0.2 deduped
+│ │ │ ├── escape-html@1.0.3 deduped
+│ │ │ ├── on-finished@2.3.0 deduped
+│ │ │ ├── parseurl@1.3.3 deduped
+│ │ │ ├── statuses@1.5.0 deduped
+│ │ │ └── unpipe@1.0.0 deduped
+│ │ ├── fresh@0.5.2 deduped
+│ │ ├── merge-descriptors@1.0.1 deduped
+│ │ ├── methods@1.1.2 deduped
+│ │ ├── on-finished@2.3.0 deduped
+│ │ ├── parseurl@1.3.3
+│ │ ├── path-to-regexp@0.1.7 deduped
+│ │ ├─┬ proxy-addr@2.0.6
+│ │ │ ├── forwarded@0.1.2 deduped
+│ │ │ └── ipaddr.js@1.9.1
+│ │ ├── qs@6.7.0
+│ │ ├── range-parser@1.2.1
+│ │ ├── safe-buffer@5.1.2
+│ │ ├─┬ send@0.17.1
+│ │ │ ├── debug@2.6.9 deduped
+│ │ │ ├── depd@1.1.2 deduped
+│ │ │ ├── destroy@1.0.4 deduped
+│ │ │ ├── encodeurl@1.0.2 deduped
+│ │ │ ├── escape-html@1.0.3 deduped
+│ │ │ ├── etag@1.8.1 deduped
+│ │ │ ├── fresh@0.5.2 deduped
+│ │ │ ├── http-errors@1.7.2 deduped
+│ │ │ ├── mime@1.6.0
+│ │ │ ├── ms@2.1.1
+│ │ │ ├── on-finished@2.3.0 deduped
+│ │ │ ├── range-parser@1.2.1 deduped
+│ │ │ └── statuses@1.5.0 deduped
+│ │ ├─┬ serve-static@1.14.1
+│ │ │ ├── encodeurl@1.0.2 deduped
+│ │ │ ├── escape-html@1.0.3 deduped
+│ │ │ ├── parseurl@1.3.3 deduped
+│ │ │ └── send@0.17.1 deduped
+│ │ ├── setprototypeof@1.1.1
+│ │ ├── statuses@1.5.0
+│ │ ├─┬ type-is@1.6.18
+│ │ │ ├── media-typer@0.3.0 deduped
+│ │ │ └── mime-types@2.1.27 deduped
+│ │ ├── utils-merge@1.0.1 deduped
+│ │ └── vary@1.1.2 deduped
 │ ├─┬ neo4j-driver@1.5.3
 │ │ ├─┬ babel-runtime@6.26.0
 │ │ │ ├── core-js@2.5.3
@@ -657,153 +739,10 @@ bot-controller@1.1.0 /mnt/e/Development/happy_meal/bots/controllerBot
 │ │ │   ├── regex-not@1.0.2 deduped
 │ │ │   └─┬ safe-regex@1.1.0
 │ │ │     └── ret@0.1.15
-│ │ ├─┬ UNMET OPTIONAL DEPENDENCY fsevents@1.1.3
-│ │ │ ├── UNMET OPTIONAL DEPENDENCY nan@2.8.0
-│ │ │ └─┬ UNMET OPTIONAL DEPENDENCY node-pre-gyp@0.6.39
-│ │ │   ├── UNMET OPTIONAL DEPENDENCY detect-libc@1.0.2
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY hawk@3.1.3
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY boom@2.10.1
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY hoek@2.16.3
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY cryptiles@2.0.5
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY boom@2.10.1
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY hoek@2.16.3
-│ │ │   │ └─┬ UNMET OPTIONAL DEPENDENCY sntp@1.0.9
-│ │ │   │   └── UNMET OPTIONAL DEPENDENCY hoek@2.16.3
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY mkdirp@0.5.1
-│ │ │   │ └── UNMET OPTIONAL DEPENDENCY minimist@0.0.8
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY nopt@4.0.1
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY abbrev@1.1.0
-│ │ │   │ └─┬ UNMET OPTIONAL DEPENDENCY osenv@0.1.4
-│ │ │   │   ├── UNMET OPTIONAL DEPENDENCY os-homedir@1.0.2
-│ │ │   │   └── UNMET OPTIONAL DEPENDENCY os-tmpdir@1.0.2
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY npmlog@4.1.0
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY are-we-there-yet@1.1.4
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY delegates@1.0.0
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY readable-stream@2.2.9
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY console-control-strings@1.1.0
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY gauge@2.7.4
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY aproba@1.1.1
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY console-control-strings@1.1.0
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY has-unicode@2.0.1
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY object-assign@4.1.1
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY signal-exit@3.0.2
-│ │ │   │ │ ├─┬ UNMET OPTIONAL DEPENDENCY string-width@1.0.2
-│ │ │   │ │ │ ├── UNMET OPTIONAL DEPENDENCY code-point-at@1.1.0
-│ │ │   │ │ │ ├─┬ UNMET OPTIONAL DEPENDENCY is-fullwidth-code-point@1.0.0
-│ │ │   │ │ │ │ └── UNMET OPTIONAL DEPENDENCY number-is-nan@1.0.1
-│ │ │   │ │ │ └── UNMET OPTIONAL DEPENDENCY strip-ansi@3.0.1
-│ │ │   │ │ ├─┬ UNMET OPTIONAL DEPENDENCY strip-ansi@3.0.1
-│ │ │   │ │ │ └── UNMET OPTIONAL DEPENDENCY ansi-regex@2.1.1
-│ │ │   │ │ └─┬ UNMET OPTIONAL DEPENDENCY wide-align@1.1.2
-│ │ │   │ │   └── UNMET OPTIONAL DEPENDENCY string-width@1.0.2
-│ │ │   │ └── UNMET OPTIONAL DEPENDENCY set-blocking@2.0.0
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY rc@1.2.1
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY deep-extend@0.4.2
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY ini@1.3.4
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY minimist@1.2.0
-│ │ │   │ └── UNMET OPTIONAL DEPENDENCY strip-json-comments@2.0.1
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY request@2.81.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY aws-sign2@0.6.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY aws4@1.6.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY caseless@0.12.0
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY combined-stream@1.0.5
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY delayed-stream@1.0.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY extend@3.0.1
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY forever-agent@0.6.1
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY form-data@2.1.4
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY asynckit@0.4.0
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY combined-stream@1.0.5
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY mime-types@2.1.15
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY har-validator@4.2.1
-│ │ │   │ │ ├─┬ UNMET OPTIONAL DEPENDENCY ajv@4.11.8
-│ │ │   │ │ │ ├── UNMET OPTIONAL DEPENDENCY co@4.6.0
-│ │ │   │ │ │ └─┬ UNMET OPTIONAL DEPENDENCY json-stable-stringify@1.0.1
-│ │ │   │ │ │   └── UNMET OPTIONAL DEPENDENCY jsonify@0.0.0
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY har-schema@1.0.5
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY hawk@3.1.3
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY http-signature@1.1.1
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY assert-plus@0.2.0
-│ │ │   │ │ ├─┬ UNMET OPTIONAL DEPENDENCY jsprim@1.4.0
-│ │ │   │ │ │ ├── UNMET OPTIONAL DEPENDENCY assert-plus@1.0.0
-│ │ │   │ │ │ ├── UNMET OPTIONAL DEPENDENCY extsprintf@1.0.2
-│ │ │   │ │ │ ├── UNMET OPTIONAL DEPENDENCY json-schema@0.2.3
-│ │ │   │ │ │ └─┬ UNMET OPTIONAL DEPENDENCY verror@1.3.6
-│ │ │   │ │ │   └── UNMET OPTIONAL DEPENDENCY extsprintf@1.0.2
-│ │ │   │ │ └─┬ UNMET OPTIONAL DEPENDENCY sshpk@1.13.0
-│ │ │   │ │   ├── UNMET OPTIONAL DEPENDENCY asn1@0.2.3
-│ │ │   │ │   ├── UNMET OPTIONAL DEPENDENCY assert-plus@1.0.0
-│ │ │   │ │   ├─┬ UNMET OPTIONAL DEPENDENCY bcrypt-pbkdf@1.0.1
-│ │ │   │ │   │ └── UNMET OPTIONAL DEPENDENCY tweetnacl@0.14.5
-│ │ │   │ │   ├─┬ UNMET OPTIONAL DEPENDENCY dashdash@1.14.1
-│ │ │   │ │   │ └── UNMET OPTIONAL DEPENDENCY assert-plus@1.0.0
-│ │ │   │ │   ├─┬ UNMET OPTIONAL DEPENDENCY ecc-jsbn@0.1.1
-│ │ │   │ │   │ └── UNMET OPTIONAL DEPENDENCY jsbn@0.1.1
-│ │ │   │ │   ├─┬ UNMET OPTIONAL DEPENDENCY getpass@0.1.7
-│ │ │   │ │   │ └── UNMET OPTIONAL DEPENDENCY assert-plus@1.0.0
-│ │ │   │ │   ├─┬ UNMET OPTIONAL DEPENDENCY jodid25519@1.0.2
-│ │ │   │ │   │ └── UNMET OPTIONAL DEPENDENCY jsbn@0.1.1
-│ │ │   │ │   ├── UNMET OPTIONAL DEPENDENCY jsbn@0.1.1
-│ │ │   │ │   └── UNMET OPTIONAL DEPENDENCY tweetnacl@0.14.5
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY is-typedarray@1.0.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY isstream@0.1.2
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY json-stringify-safe@5.0.1
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY mime-types@2.1.15
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY mime-db@1.27.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY oauth-sign@0.8.2
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY performance-now@0.2.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY qs@6.4.0
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY safe-buffer@5.0.1
-│ │ │   │ ├── UNMET OPTIONAL DEPENDENCY stringstream@0.0.5
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY tough-cookie@2.3.2
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY punycode@1.4.1
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY tunnel-agent@0.6.0
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY safe-buffer@5.0.1
-│ │ │   │ └── UNMET OPTIONAL DEPENDENCY uuid@3.0.1
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY rimraf@2.6.1
-│ │ │   │ └─┬ UNMET OPTIONAL DEPENDENCY glob@7.1.2
-│ │ │   │   ├── UNMET OPTIONAL DEPENDENCY fs.realpath@1.0.0
-│ │ │   │   ├─┬ UNMET OPTIONAL DEPENDENCY inflight@1.0.6
-│ │ │   │   │ ├── UNMET OPTIONAL DEPENDENCY once@1.4.0
-│ │ │   │   │ └── UNMET OPTIONAL DEPENDENCY wrappy@1.0.2
-│ │ │   │   ├── UNMET OPTIONAL DEPENDENCY inherits@2.0.3
-│ │ │   │   ├─┬ UNMET OPTIONAL DEPENDENCY minimatch@3.0.4
-│ │ │   │   │ └─┬ UNMET OPTIONAL DEPENDENCY brace-expansion@1.1.7
-│ │ │   │   │   ├── UNMET OPTIONAL DEPENDENCY balanced-match@0.4.2
-│ │ │   │   │   └── UNMET OPTIONAL DEPENDENCY concat-map@0.0.1
-│ │ │   │   ├── UNMET OPTIONAL DEPENDENCY once@1.4.0
-│ │ │   │   └── UNMET OPTIONAL DEPENDENCY path-is-absolute@1.0.1
-│ │ │   ├── UNMET OPTIONAL DEPENDENCY semver@5.3.0
-│ │ │   ├─┬ UNMET OPTIONAL DEPENDENCY tar@2.2.1
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY block-stream@0.0.9
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY inherits@2.0.3
-│ │ │   │ ├─┬ UNMET OPTIONAL DEPENDENCY fstream@1.0.11
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY graceful-fs@4.1.11
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY inherits@2.0.3
-│ │ │   │ │ ├── UNMET OPTIONAL DEPENDENCY mkdirp@0.5.1
-│ │ │   │ │ └── UNMET OPTIONAL DEPENDENCY rimraf@2.6.1
-│ │ │   │ └── UNMET OPTIONAL DEPENDENCY inherits@2.0.3
-│ │ │   └─┬ UNMET OPTIONAL DEPENDENCY tar-pack@3.4.0
-│ │ │     ├─┬ UNMET OPTIONAL DEPENDENCY debug@2.6.8
-│ │ │     │ └── UNMET OPTIONAL DEPENDENCY ms@2.0.0
-│ │ │     ├── UNMET OPTIONAL DEPENDENCY fstream@1.0.11
-│ │ │     ├─┬ UNMET OPTIONAL DEPENDENCY fstream-ignore@1.0.5
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY fstream@1.0.11
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY inherits@2.0.3
-│ │ │     │ └── UNMET OPTIONAL DEPENDENCY minimatch@3.0.4
-│ │ │     ├─┬ UNMET OPTIONAL DEPENDENCY once@1.4.0
-│ │ │     │ └── UNMET OPTIONAL DEPENDENCY wrappy@1.0.2
-│ │ │     ├─┬ UNMET OPTIONAL DEPENDENCY readable-stream@2.2.9
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY buffer-shims@1.0.0
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY core-util-is@1.0.2
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY inherits@2.0.3
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY isarray@1.0.0
-│ │ │     │ ├── UNMET OPTIONAL DEPENDENCY process-nextick-args@1.0.7
-│ │ │     │ ├─┬ UNMET OPTIONAL DEPENDENCY string_decoder@1.0.1
-│ │ │     │ │ └── UNMET OPTIONAL DEPENDENCY safe-buffer@5.0.1
-│ │ │     │ └── UNMET OPTIONAL DEPENDENCY util-deprecate@1.0.2
-│ │ │     ├── UNMET OPTIONAL DEPENDENCY rimraf@2.6.1
-│ │ │     ├── UNMET OPTIONAL DEPENDENCY tar@2.2.1
-│ │ │     └── UNMET OPTIONAL DEPENDENCY uid-number@0.0.6
+│ │ ├─┬ UNMET OPTIONAL DEPENDENCY fsevents@1.2.13
+│ │ │ ├─┬ bindings@1.5.0
+│ │ │ │ └── file-uri-to-path@1.0.0
+│ │ │ └── nan@2.14.2
 │ │ ├─┬ glob-parent@3.1.0
 │ │ │ ├─┬ is-glob@3.1.0
 │ │ │ │ └── is-extglob@2.1.1 deduped
@@ -1003,3 +942,4 @@ bot-controller@1.1.0 /mnt/e/Development/happy_meal/bots/controllerBot
   │ └── lodash@4.17.20
   ├── stealthy-require@1.1.1
   └── tough-cookie@2.5.0 deduped
+

@@ -1,0 +1,22 @@
+├─ MIT: 430
+├─ ISC: 40
+├─ MIT*: 11
+├─ Apache-2.0: 8
+├─ BSD-3-Clause: 8
+├─ BSD-2-Clause: 3
+├─ Custom: https://travis-ci.org/squaremo/bitsyntax-js.png: 1
+├─ UNLICENSED: 1
+├─ Custom: https://github.com/menome/harvesterTemplate: 1
+├─ Custom: http://i.imgur.com/goJdO.png: 1
+├─ (MIT OR Apache-2.0): 1
+├─ Custom: https://github.com/douglascrockford/JSON-js: 1
+├─ AFLv2.1,BSD: 1
+├─ Public Domain: 1
+├─ Custom: https://github.com/dominictarr/event-stream: 1
+├─ (WTFPL OR MIT): 1
+├─ MIT,Apache2: 1
+├─ (BSD-2-Clause OR MIT OR Apache-2.0): 1
+├─ Apache*: 1
+├─ Apache License, Version 2.0: 1
+└─ Unlicense: 1
+
